@@ -1,0 +1,9 @@
+{
+  "name": "wix-slides-app",
+  "version": "0.0.1",
+  "description": "Repo contanting the vite frontend and go backend",
+  "main": "dist/main.js",
+  "license": "MIT",
+  "author": "igors-wix <igors@wix.com>",
+  "private": false
+}
