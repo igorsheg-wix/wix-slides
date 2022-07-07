@@ -1,0 +1,37 @@
+{
+  "name": "@wix-slides/editor",
+  "version": "0.0.1",
+  "description": "Wix slides editor",
+  "license": "MIT",
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "lint": "eslint --ext ts,tsx . --fix"
+  },
+  "dependencies": {
+    "@radix-ui/react-icons": "^1.1.1",
+    "@radix-ui/react-visually-hidden": "^0.1.4",
+    "@udecode/plate": "^14.1.0",
+    "classnames": "^2.3.1",
+    "is-hotkey": "^0.2.0",
+    "react": "^18.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.2.0",
+    "slate": "^0.81.1",
+    "slate-react": "^0.81.0",
+    "styled-components": "^5.3.5",
+    "@wix-slides/common": "0.0.1"
+
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.15",
+    "@types/styled-components": "^5.1.25",
+    "typescript-styled-plugin": "^0.18.2"
+  }
+}

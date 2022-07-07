@@ -1,45 +1,56 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { FC, useEffect } from 'react'
+import { getCookie } from '@wix-slides/common/utils/cookie'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import styled from 'styled-components'
+import useDecksterStore from './stores'
+import Deckster from './views/Deckster'
+import Home from './views/Home'
+import Login from './views/Login'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: FC = () => {
+  const { set } = useDecksterStore()
+
+  useEffect(() => {
+    fetch('/api/me').then((x) =>
+      x.json().then((user) =>
+        set((s) => {
+          s.userInfo = user
+        })
+      )
+    )
+  }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save 4 to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <Wrap>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/editor"
+          element={
+            <RequireAuth>
+              <Deckster />
+            </RequireAuth>
+          }
+        />
+      </Routes>
+    </Wrap>
   )
 }
 
+function RequireAuth({ children }: { children: JSX.Element }) {
+  const location = useLocation()
+  const accessToken = getCookie('access_token')
+
+  if (!accessToken) {
+    return <Navigate to="/login" state={{ from: location }} replace />
+  }
+
+  return children
+}
+
+const Wrap = styled.div`
+  width: 100vw;
+  height: 100vh;
+`
 export default App

@@ -43,9 +43,6 @@ func pageWithAVue(w http.ResponseWriter, r *http.Request) {
 
 func init() {
 	flag.StringVar(&environment, "env", "development", "development|production")
-	// flag.StringVar(&assets, "assets", "frontend", "location of javascript files. dist for production.")
-	// flag.StringVar(&jsEntryPoint, "entryp", "src/main.js", "relative path of the entry point of the js app.")
-	// flag.StringVar(&platform, "platform", "vue", "vue|react|svelte")
 	flag.Parse()
 
 	if environment == "development" {
@@ -71,14 +68,6 @@ func main() {
 	config.Platform = "react"
 	config.URLPrefix = appConfig.URLPrefix
 	config.FS = dist
-
-	// if environment == "production" {
-	// 	config.URLPrefix = "/assets/"
-	// } else if environment == "development" {
-	// 	config.URLPrefix = "/src/"
-	// } else {
-	// 	log.Fatalln("illegal environment setting")
-	// }
 
 	glue, err := vueglue.NewVueGlue(&config)
 	if err != nil {

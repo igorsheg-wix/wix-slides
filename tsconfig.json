@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.prod.json",
+    "compilerOptions": {
+      "paths": {
+        "@wix-slides/common/*": ["./packages/common/src/*"],
+        "@wix-slides/editor/*": ["./packages/editor/src/*"],
+        "@wix-slides/app/*": ["./packages/app/src/*"],
+        "@wix-slides/templates": ["./packages/templates/src"],
+      },
+    },
+  }

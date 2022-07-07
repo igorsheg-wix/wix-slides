@@ -1,0 +1,31 @@
+{
+  "name": "@wix-slides/common",
+  "version": "0.0.1",
+  "description": "Wix slides common",
+  "license": "MIT",
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@radix-ui/react-icons": "^1.1.1",
+    "@udecode/plate": "^14.1.0",
+    "classnames": "^2.3.1",
+    "dompurify": "^2.3.8",
+    "is-hotkey": "^0.2.0",
+    "marked": "^4.0.17",
+    "react": "^18.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.2.0",
+    "slate": "^0.81.1",
+    "slate-react": "^0.81.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.15",
+    "typescript-styled-plugin": "^0.18.2"
+  }
+}
