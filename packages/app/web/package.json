@@ -8,7 +8,7 @@
   "private": false,
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": " vite build",
     "preview": "vite preview",
     "lint": "eslint --ext ts,tsx . --fix"
   },
@@ -16,6 +16,7 @@
     "@radix-ui/react-visually-hidden": "^0.1.4",
     "@rollup/plugin-alias": "^3.1.9",
     "@udecode/plate": "^14.1.0",
+    "@wix-slides/editor": "0.0.1",
     "classnames": "^2.3.1",
     "decision-tree": "^0.3.7",
     "dompurify": "^2.3.8",
@@ -33,10 +34,7 @@
     "styled-components": "^5.3.5",
     "underscore": "^1.13.4",
     "vite-tsconfig-paths": "^3.5.0",
-    "zustand": "^4.0.0-rc.1",
-    "@wix-slides/editor": "0.0.1"
-
-
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@types/dompurify": "^2.3.3",

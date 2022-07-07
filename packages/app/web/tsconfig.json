@@ -1,6 +1,6 @@
 {
   "extends": "../../../tsconfig.json",
-  "include": ["./src"],
+  "include": ["./src", "types.d.ts"],
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -16,7 +16,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ]
   },
   "references": [{ "path": "./tsconfig.node.json" }]
 
