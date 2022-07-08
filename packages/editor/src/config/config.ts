@@ -27,9 +27,9 @@ import {
   createPlateUI,
   isBlockAboveEmpty,
   isSelectionAtBlockStart,
-} from '@udecode/plate'
-import type { MyPlatePlugin, MyValue } from '@wix-slides/common/types'
-import { autoformatRules } from './autoformat/autoformatRules'
+} from "@udecode/plate";
+import type { MyPlatePlugin, MyValue } from "@wix-slides/common/types";
+import { autoformatRules } from "./autoformat/autoformatRules";
 
 const resetBlockTypesCommonRule = {
   types: [
@@ -43,28 +43,28 @@ const resetBlockTypesCommonRule = {
     ELEMENT_H6,
   ],
   defaultType: ELEMENT_PARAGRAPH,
-}
+};
 
 export const CONFIG: {
-  components: Record<string, any>
-  editableProps: TEditableProps<MyValue>
-  align: Partial<MyPlatePlugin>
-  autoformat: Partial<MyPlatePlugin<AutoformatPlugin<Value, PlateEditor>>>
-  exitBreak: Partial<MyPlatePlugin<ExitBreakPlugin>>
-  forceLayout: Partial<MyPlatePlugin<NormalizeTypesPlugin>>
-  indent: Partial<MyPlatePlugin<IndentPlugin>>
-  lineHeight: Partial<MyPlatePlugin>
-  resetBlockType: Partial<MyPlatePlugin<ResetNodePlugin>>
-  selectOnBackspace: Partial<MyPlatePlugin<SelectOnBackspacePlugin>>
-  softBreak: Partial<MyPlatePlugin<SoftBreakPlugin>>
-  trailingBlock: Partial<MyPlatePlugin<TrailingBlockPlugin>>
+  components: Record<string, any>;
+  editableProps: TEditableProps<MyValue>;
+  align: Partial<MyPlatePlugin>;
+  autoformat: Partial<MyPlatePlugin<AutoformatPlugin<Value, PlateEditor>>>;
+  exitBreak: Partial<MyPlatePlugin<ExitBreakPlugin>>;
+  forceLayout: Partial<MyPlatePlugin<NormalizeTypesPlugin>>;
+  indent: Partial<MyPlatePlugin<IndentPlugin>>;
+  lineHeight: Partial<MyPlatePlugin>;
+  resetBlockType: Partial<MyPlatePlugin<ResetNodePlugin>>;
+  selectOnBackspace: Partial<MyPlatePlugin<SelectOnBackspacePlugin>>;
+  softBreak: Partial<MyPlatePlugin<SoftBreakPlugin>>;
+  trailingBlock: Partial<MyPlatePlugin<TrailingBlockPlugin>>;
 } = {
   editableProps: {
     spellCheck: false,
     autoFocus: false,
-    placeholder: 'Type…',
+    placeholder: "Type…",
     style: {
-      padding: '15px',
+      padding: "15px",
     },
   },
   components: createPlateUI(),
@@ -123,12 +123,12 @@ export const CONFIG: {
       rules: [
         {
           ...resetBlockTypesCommonRule,
-          hotkey: 'Enter',
+          hotkey: "Enter",
           predicate: isBlockAboveEmpty,
         },
         {
           ...resetBlockTypesCommonRule,
-          hotkey: 'Backspace',
+          hotkey: "Backspace",
           predicate: isSelectionAtBlockStart,
         },
       ],
@@ -138,9 +138,9 @@ export const CONFIG: {
   softBreak: {
     options: {
       rules: [
-        { hotkey: 'shift+enter' },
+        { hotkey: "shift+enter" },
         {
-          hotkey: 'enter',
+          hotkey: "enter",
           query: {
             allow: [ELEMENT_CODE_BLOCK, ELEMENT_BLOCKQUOTE, ELEMENT_TD],
           },
@@ -152,14 +152,14 @@ export const CONFIG: {
     options: {
       rules: [
         {
-          hotkey: 'mod+enter',
+          hotkey: "mod+enter",
         },
         {
-          hotkey: 'mod+shift+enter',
+          hotkey: "mod+shift+enter",
           before: true,
         },
         {
-          hotkey: 'enter',
+          hotkey: "enter",
           query: {
             start: true,
             end: true,
@@ -186,4 +186,4 @@ export const CONFIG: {
       rules: [{ path: [0], strictType: ELEMENT_H1 }],
     },
   },
-}
+};

@@ -1,12 +1,12 @@
-import React from 'react'
-import styled from 'styled-components'
-import Flex from '../../components/Flex'
-import Padder from '../../components/Padder'
+import React from "react";
+import styled from "styled-components";
+import Flex from "../../components/Flex";
+import Padder from "../../components/Padder";
 
 const Navigation = () => {
   const publishHandler = () => {
-    fetch('/api/slide').then((x) => x.json().then((data) => console.log(data)))
-  }
+    fetch("/api/slide").then((x) => x.json().then((data) => console.log(data)));
+  };
   return (
     <Wrap align="center" justify="space-between">
       <Padder />
@@ -14,10 +14,10 @@ const Navigation = () => {
         <button onClick={publishHandler}>Publish</button>
       </Flex>
     </Wrap>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;
 
 const Wrap = styled(Flex)`
   width: 100%;
@@ -28,4 +28,4 @@ const Wrap = styled(Flex)`
   background: white;
   box-sizing: border-box;
   box-shadow: 0 1px 0 rgb(199, 199, 199);
-`
+`;

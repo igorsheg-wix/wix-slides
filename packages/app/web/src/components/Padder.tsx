@@ -1,14 +1,14 @@
-import React, { FC } from 'react'
-import styled from 'styled-components'
+import React, { FC } from "react";
+import styled from "styled-components";
 
 interface Props {
-  x?: number | string
-  y?: number | string
+  x?: number | string;
+  y?: number | string;
 }
 
 const Padder: FC<Props> = ({ ...props }) => {
-  return <StyledPadder {...props} />
-}
+  return <StyledPadder {...props} />;
+};
 
 const StyledPadder = styled.span<Props>`
   z-index: -1;
@@ -20,6 +20,6 @@ const StyledPadder = styled.span<Props>`
 
   min-width: ${(p) =>
     p.x && !isNaN(p.x as number) ? `${p.x}px` : isNaN(p.x as number) ? p.x : 0};
-`
+`;
 
-export default Padder
+export default Padder;

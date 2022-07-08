@@ -1,61 +1,43 @@
-import React from 'react'
-import { usePlateSelectors } from '@udecode/plate'
-import type { Slide } from '@wix-slides/common/types'
-import { getSlideChildsWithMeasurement } from '@wix-slides/common/utils/measure'
-import { templateEngine } from '@wix-slides/common/utils/template-engine'
-import { templates } from '@wix-slides/templates'
-import useDecksterStore from '../../stores'
-import styles from './Slide.module.scss'
+import React from "react";
+import { usePlateSelectors } from "@udecode/plate";
+import type { Slide } from "@wix-slides/common/types";
+import { getSlideChildsWithMeasurement } from "@wix-slides/common/utils/measure";
+import { templateEngine } from "@wix-slides/common/utils/template-engine";
+import { templates } from "@wix-slides/templates";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
+import useDecksterStore from "../../stores";
+import styles from "./Slide.module.scss";
 
 interface SlideProps {
-  id: string
-  index: number
-  slide: Slide
+  id: string;
+  index: number;
+  slide: Slide;
 }
 
-const WixSlide = React.memo(({ slide, id, index }: SlideProps) => {
-  const ref = React.createRef<HTMLDivElement>()
-  const editor = usePlateSelectors().editor()
-  const setDecksterStore = useDecksterStore((s) => s.set)
-  const cursorOnSlide = useDecksterStore((s) => s.cursorOnSlide)
-  const { tokens } = slide
+const WixSlide = React.memo(({ slide, index }: SlideProps) => {
+  const editor = usePlateSelectors().editor();
+  const cursorOnSlide = useDecksterStore((s) => s.cursorOnSlide);
+  const { tokens } = slide;
+  const activeSlide = index === cursorOnSlide;
 
-  React.useEffect(() => {
-    if (ref && ref.current && cursorOnSlide === index) {
-      ref.current.scrollIntoView({ block: 'center', behavior: 'smooth' })
-    }
-  }, [cursorOnSlide])
-
-  React.useEffect(() => {
-    setDecksterStore((s) => {
-      const ctxSlideIndex = s.slides.findIndex((s) => s.id === id)
-      s.slides[ctxSlideIndex] = {
-        ...s.slides[ctxSlideIndex],
-        template: templateEngine(tokens),
-        elements: getSlideChildsWithMeasurement(
-          ref.current,
-          s.slides[ctxSlideIndex].width
-        ),
+  const ref = React.useCallback(
+    (node: HTMLButtonElement) => {
+      if (activeSlide && node) {
+        scrollIntoView(node, {
+          scrollMode: "if-needed",
+          block: "center",
+          boundary: (parent) => {
+            return parent.id !== "wix-slides-dash-menu";
+          },
+        });
       }
-    })
-  }, [tokens])
+    },
+    [activeSlide]
+  );
 
-  React.useLayoutEffect(() => {
-    if (ref && ref.current) {
-      setDecksterStore((s) => {
-        const ctxSlideIndex = s.slides.findIndex((s) => s.id === id)
-        s.slides[ctxSlideIndex] = {
-          ...s.slides[ctxSlideIndex],
-          width: ref.current?.offsetWidth || 0,
-          backgroundImage: slideBackgroundImage,
-        }
-      })
-    }
-  }, [])
-
-  const ctxTemplate = React.useCallback(() => templateEngine(tokens), [tokens])
-  const Template = templates[ctxTemplate()].render()
-  const slideBackgroundImage = templates[ctxTemplate()].backgroundImage
+  const ctxTemplate = React.useCallback(() => templateEngine(tokens), [tokens]);
+  const Template = templates[ctxTemplate()].render();
+  const slideBackgroundImage = templates[ctxTemplate()].backgroundImage;
 
   return (
     <div
@@ -63,7 +45,7 @@ const WixSlide = React.memo(({ slide, id, index }: SlideProps) => {
       data-deckster-template={templateEngine(tokens)}
       data-deckster-slide="true"
       id={`slide${index}`}
-      ref={ref}
+      ref={ref as any}
     >
       <div className={styles.content}>
         {editor && (
@@ -75,7 +57,7 @@ const WixSlide = React.memo(({ slide, id, index }: SlideProps) => {
         )}
       </div>
     </div>
-  )
-})
+  );
+});
 
-export { WixSlide }
+export { WixSlide };

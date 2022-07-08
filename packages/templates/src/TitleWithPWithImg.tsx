@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
 import { PlateEditor, Value } from '@udecode/plate'
-import { useEditorTohtml } from '@wix-slides/common/hooks/useEditorToHtml'
+import {
+  useEditorImage,
+  useEditorTohtml,
+} from '@wix-slides/common/hooks/useEditorToHtml'
 import { pxToVw } from '@wix-slides/common/utils/calcs'
 import styled from 'styled-components'
 
@@ -9,29 +12,64 @@ interface SlideTemplate {
   editor: PlateEditor<Value>
 }
 
-const TitleAndParagraph = ({ tokens, editor }: SlideTemplate) => {
+const TitleWithParagraphWithImage = ({ tokens, editor }: SlideTemplate) => {
   const heading = useEditorTohtml(editor, tokens, 'h1')
   const paragraph = useEditorTohtml(editor, tokens, 'p')
+  const image = useEditorImage(editor, tokens)
 
   useEffect(() => {
-    console.log('From just p', tokens)
+    console.log(tokens)
   }, [tokens])
 
   return (
     <Wrap>
-      {heading()}
-      {paragraph()}
+      <ContentWrap>
+        {heading()}
+        {paragraph()}
+      </ContentWrap>
+
+      <SlideImage>
+        <img src={image} />
+      </SlideImage>
     </Wrap>
   )
 }
 
+const ContentWrap = styled.div`
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-direction: column;
+`
+const SlideImage = styled.div`
+  width: 60%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-direction: column;
+  /* margin-right: ${pxToVw(80)}vw;
+  margin-top: ${pxToVw(80)}vw;
+  margin-bottom: ${pxToVw(80)}vw; */
+  overflow: hidden;
+  padding: ${pxToVw(80)}vw;
+
+  img {
+    height: 100%;
+    /* width: 100%; */
+    object-fit: cover;
+    display: block;
+  }
+`
 const Wrap = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  flex-direction: column;
+  flex-direction: row;
 
   h1,
   h2,
@@ -60,4 +98,4 @@ const Wrap = styled.div`
   }
 `
 
-export default TitleAndParagraph
+export default TitleWithParagraphWithImage

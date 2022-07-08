@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import Flex from '../components/Flex'
-import useDecksterStore from '../stores'
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import Flex from "../components/Flex";
+import useDecksterStore from "../stores";
 
 const Login = () => {
-  const { userInfo } = useDecksterStore()
-  const navigate = useNavigate()
+  const { userInfo } = useDecksterStore();
+  const navigate = useNavigate();
 
   const loginHandler = () => {
-    window.open('/oauth/login', '_self')
-  }
+    window.open("/oauth/login", "_self");
+  };
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/editor', { replace: true })
+      navigate("/editor", { replace: true });
     }
-  }, [userInfo])
+  }, [userInfo]);
 
   return (
     <Wrap justify="center" align="center">
@@ -24,8 +24,8 @@ const Login = () => {
         <button onClick={loginHandler}>Sign in with Google</button>
       </Content>
     </Wrap>
-  )
-}
+  );
+};
 
 const Content = styled(Flex)`
   max-width: 600px;
@@ -36,10 +36,10 @@ const Content = styled(Flex)`
     margin: 0;
     font-size: 1.618rem;
   }
-`
+`;
 
 const Wrap = styled(Flex)`
   width: 100vw;
   height: 100vh;
-`
-export default Login
+`;
+export default Login;

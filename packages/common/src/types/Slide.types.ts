@@ -3,6 +3,7 @@ import { PlateEditor, Value } from "@udecode/plate";
 export enum Temaplte {
   cover = "cover",
   titleWithP = "titleWithP",
+  titleWithPWithImage = "titleWithPWithImage"
 }
 
 export interface Slide {

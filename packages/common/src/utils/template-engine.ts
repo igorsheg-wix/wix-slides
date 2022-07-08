@@ -1,15 +1,14 @@
 import { Value } from "@udecode/plate";
 import { Temaplte } from "../types";
 import { indices } from "./calcs";
-// import { createDecisionTree, predict } from './decision-tree.js'
 import dt from "./decision-tree";
 
-// import DecisionTree from 'decision-tree'
-// import { executeEngine } from 'nested-rules-engine'
 
 const trainingData = [
   { h1: 1, p: 0, img: 0, template: Temaplte.cover },
   { h1: 1, p: 1, img: 0, template: Temaplte.titleWithP },
+  { h1: 1, p: 1, img: 1, template: Temaplte.titleWithPWithImage },
+
 ];
 
 const config = {
@@ -35,6 +34,8 @@ export const templateEngine = (tokens: Value): Temaplte => {
       "img"
     ).length,
   };
+  console.log("Prediction", decisionTree.predict(tokensToPredict));
+  
 
   return decisionTree.predict(tokensToPredict);
 };

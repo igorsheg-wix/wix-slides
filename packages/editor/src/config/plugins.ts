@@ -8,6 +8,7 @@ import {
   createExitBreakPlugin,
   createHeadingPlugin,
   createHorizontalRulePlugin,
+  createImagePlugin,
   createItalicPlugin,
   createNodeIdPlugin,
   createParagraphPlugin,
@@ -20,11 +21,11 @@ import {
   createSubscriptPlugin,
   createSuperscriptPlugin,
   createUnderlinePlugin,
-} from '@udecode/plate'
-import { createMyPlugins } from '@wix-slides/common/types'
-import { createDashMenuPlugin } from '../components/DashMenu/createMentionPlugin'
-import { components } from './components'
-import { CONFIG } from './config'
+} from "@udecode/plate";
+import { createMyPlugins } from "@wix-slides/common/types";
+import { createDashMenuPlugin } from "../components/DashMenu/createMentionPlugin";
+import { components } from "./components";
+import { CONFIG } from "./config";
 
 const basicElements = createMyPlugins(
   [
@@ -33,11 +34,12 @@ const basicElements = createMyPlugins(
     createHeadingPlugin(),
     createParagraphPlugin(),
     createHorizontalRulePlugin(),
+    createImagePlugin(),
   ],
   {
     components,
   }
-)
+);
 
 const basicMarks = createMyPlugins(
   [
@@ -52,7 +54,7 @@ const basicMarks = createMyPlugins(
   {
     components: createPlateUI(),
   }
-)
+);
 
 const logic = createMyPlugins(
   [
@@ -67,10 +69,10 @@ const logic = createMyPlugins(
     createSelectOnBackspacePlugin(CONFIG.selectOnBackspace),
   ],
   { components }
-)
+);
 
 export const PLUGINS = {
   basicElements,
   basicMarks,
   logic,
-}
+};

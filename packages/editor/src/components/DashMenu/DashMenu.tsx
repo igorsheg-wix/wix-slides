@@ -1,23 +1,26 @@
-import React, { useCallback, useEffect } from 'react'
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
-import { useEditorState } from '@udecode/plate-core'
+import React, { useCallback, useEffect } from "react";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { PlateEditor, Value } from "@udecode/plate";
+import { useEditorState } from "@udecode/plate-core";
 import {
   getRangeBoundingClientRect,
   usePopperPosition,
   virtualReference,
-} from '@udecode/plate-ui-popper'
-import { useCombobox } from 'downshift'
-import styled from 'styled-components'
-import useDashMenuStore from '../../stores'
-import createElementOnSelectItem from './handlers/createElementOnSelectItem'
-import blockMenuItems from './menuItems'
-import filterExcessSeparators from './utils/filterExcessSeparators'
+} from "@udecode/plate-ui-popper";
+import { MenuItem } from "@wix-slides/common/types";
+import { UseComboboxGetItemPropsOptions, useCombobox } from "downshift";
+import scrollIntoView from "smooth-scroll-into-view-if-needed";
+import styled from "styled-components";
+import useDashMenuStore from "../../stores";
+import createElementOnSelectItem from "./handlers/createElementOnSelectItem";
+import blockMenuItems from "./menuItems";
+import filterExcessSeparators from "./utils/filterExcessSeparators";
 
 function Menu() {
-  const dashmenu = useDashMenuStore()
-  const popperRef = React.useRef<any>(null)
-  const editor = useEditorState()
-  const { insertText: _insertText } = editor
+  const dashmenu = useDashMenuStore();
+  const popperRef = React.useRef<any>(null);
+  const editor = useEditorState();
+  const targetRange = editor.selection || null;
 
   const {
     getInputProps,
@@ -30,51 +33,50 @@ function Menu() {
     circularNavigation: true,
     inputValue: dashmenu.text,
     highlightedIndex: dashmenu.highlightedIndex,
-  })
-
-  const targetRange = editor.selection || null
+  });
 
   const getBoundingClientRect = useCallback(
     () => getRangeBoundingClientRect(editor, targetRange) ?? virtualReference,
     [editor, targetRange]
-  )
+  );
 
   const { styles: popperStyles, attributes } = usePopperPosition({
     popperElement: popperRef.current,
     popperContainer: document.body,
-    placement: 'bottom-start',
+    placement: "bottom-start",
     getBoundingClientRect,
     offset: [0, 4],
-  })
+  });
 
   const filtered = blockMenuItems().filter((item) => {
-    if (item.key === 'separator') {
-      return true
+    if (item.key === "separator") {
+      return true;
     }
 
-    const n = dashmenu.text.toLowerCase()
+    const n = dashmenu.text.toLowerCase();
 
     return (
-      (item.lable || '').toLowerCase().includes(n) ||
-      (item.keywords || '').toLowerCase().includes(n)
-    )
-  })
+      (item.lable || "").toLowerCase().includes(n) ||
+      (item.keywords || "").toLowerCase().includes(n)
+    );
+  });
 
   useEffect(() => {
-    let filteredItems
+    let filteredItems;
     if (!dashmenu.text) {
-      filteredItems = blockMenuItems()
+      filteredItems = blockMenuItems();
     }
-    filteredItems = filterExcessSeparators(filtered)
+    filteredItems = filterExcessSeparators(filtered);
 
-    dashmenu.setFilteredItems(filteredItems)
-  }, [dashmenu.text])
+    dashmenu.setFilteredItems(filteredItems);
+  }, [dashmenu.text]);
 
   return (
     <Wrapper
       active={dashmenu.isOpen}
       ref={popperRef}
       style={popperStyles.popper}
+      id="wix-slides-dash-menu"
       {...attributes.popper}
     >
       <div {...getComboboxProps()}>
@@ -85,37 +87,75 @@ function Menu() {
       <List {...getMenuProps()} id="dashmenu-list">
         {dashmenu.filteredItems.map((item, index) => (
           <ListItem
-            highlightedIndex
             key={`${item.key}${index}`}
-            {...getItemProps({ item, index })}
-            onPointerMove={() => dashmenu.highlightIndex(index)}
-            onPointerDown={(ev) => createElementOnSelectItem(ev, editor, item)}
-            disabled={item.key === 'separator'}
-          >
-            {item.key === 'separator' ? (
-              <Hr />
-            ) : (
-              <ListItemButton
-                disabled={item.key === 'separator'}
-                isHighlighted={highlightedIndex === index}
-              >
-                <>
-                  {item.icon && React.createElement(item.icon)}
-                  {item.lable}
-                </>
-              </ListItemButton>
-            )}
-          </ListItem>
+            editor={editor}
+            selected={index === highlightedIndex}
+            item={item}
+            index={index}
+            getItemProps={getItemProps}
+          />
         ))}
         {dashmenu.filteredItems.length === 0 && (
-          <ListItem>
+          <Item>
             <Empty>No results</Empty>
-          </ListItem>
+          </Item>
         )}
       </List>
     </Wrapper>
-  )
+  );
 }
+
+interface ListItemProps {
+  item: MenuItem;
+  index: number;
+  selected: boolean;
+  editor: PlateEditor<Value>;
+  getItemProps: (options: UseComboboxGetItemPropsOptions<MenuItem>) => any;
+}
+
+const ListItem = (props: ListItemProps) => {
+  const { item, index, selected, editor, getItemProps } = props;
+  const highlightIndex = useDashMenuStore((s) => s.highlightIndex);
+
+  const ref = React.useCallback(
+    (node: HTMLButtonElement) => {
+      if (selected && node) {
+        scrollIntoView(node, {
+          scrollMode: "if-needed",
+          block: "center",
+          boundary: (parent) => {
+            return parent.id !== "wix-slides-dash-menu";
+          },
+        });
+      }
+    },
+    [selected]
+  );
+
+  return (
+    <Item
+      {...getItemProps({ item, index })}
+      onPointerMove={() => highlightIndex(index)}
+      onPointerDown={(ev) => createElementOnSelectItem(ev, editor, item)}
+      disabled={item.key === "separator"}
+    >
+      {item.key === "separator" ? (
+        <Hr />
+      ) : (
+        <ListItemButton
+          ref={ref}
+          disabled={item.key === "separator"}
+          isHighlighted={selected}
+        >
+          <>
+            {item.icon && React.createElement(item.icon)}
+            {item.lable}
+          </>
+        </ListItemButton>
+      )}
+    </Item>
+  );
+};
 
 const Empty = styled.div`
   display: flex;
@@ -125,10 +165,10 @@ const Empty = styled.div`
   font-size: 14px;
   height: 36px;
   padding: 0 16px;
-`
+`;
 
 export const Wrapper = styled.div<{
-  active: boolean
+  active: boolean;
 }>`
   color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(33px);
@@ -158,14 +198,14 @@ export const Wrapper = styled.div<{
   ${({ active }) =>
     active &&
     `
-    transform: translateY(${'-6px'}) scale(1);
+    transform: translateY(${"-6px"}) scale(1);
     pointer-events: all;
     opacity: 1;
   `};
   @media print {
     display: none;
   }
-`
+`;
 
 const List = styled.ol`
   list-style: none;
@@ -173,12 +213,12 @@ const List = styled.ol`
   height: 100%;
   padding: 8px 0;
   margin: 0;
-`
+`;
 
-const ListItem = styled.li`
+const Item = styled.li`
   padding: 0;
   margin: 0;
-`
+`;
 
 const ListItemButton = styled.button<{ isHighlighted: boolean }>`
   display: flex;
@@ -197,7 +237,7 @@ const ListItemButton = styled.button<{ isHighlighted: boolean }>`
   opacity: 1;
   color: rgb(0, 0, 0);
   backdrop-filter: ${(p) =>
-    p.isHighlighted ? 'brightness(90%)' : 'brightness(100%)'};
+    p.isHighlighted ? "brightness(90%)" : "brightness(100%)"};
   padding: 0px 16px;
   outline: currentcolor none medium;
 
@@ -206,7 +246,7 @@ const ListItemButton = styled.button<{ isHighlighted: boolean }>`
     width: 18px;
     margin: 0 12px 0 0;
   }
-`
+`;
 
 const Hr = styled.hr`
   border-color: rgb(197, 204, 211) currentcolor currentcolor;
@@ -215,6 +255,6 @@ const Hr = styled.hr`
   border-image: none 100% / 1 / 0 stretch;
   height: 0px;
   margin: 6px 0;
-`
+`;
 
-export default Menu
+export default Menu;

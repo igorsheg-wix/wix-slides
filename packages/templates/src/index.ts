@@ -1,7 +1,7 @@
-import { ReactElement, ReactNode } from 'react'
 import { SlideTemplate, Temaplte } from '@wix-slides/common/types'
 import Cover from './Cover'
 import TitleWithP from './TitleWithP'
+import TitleWithParagraphWithImage from './TitleWithPWithImg'
 
 export const templates: Record<
   Temaplte,
@@ -22,5 +22,9 @@ export const templates: Record<
   titleWithP: {
     backgroundImage: '',
     render: () => TitleWithP,
+  },
+  titleWithPWithImage: {
+    backgroundImage: '',
+    render: () => TitleWithParagraphWithImage,
   },
 }

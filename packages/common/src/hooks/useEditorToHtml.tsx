@@ -1,8 +1,8 @@
-import { useCallback } from 'react'
-import { PlateEditor, Value, isType } from '@udecode/plate'
-import { serializeHtml } from '../utils/serializeHtml'
+import { ELEMENT_IMAGE, isType, PlateEditor, TElement, Value } from '@udecode/plate'
 import DOMPurify from 'dompurify'
 import parse from 'html-react-parser'
+import { useCallback } from 'react'
+import { serializeHtml } from '../utils/serializeHtml'
 
 export const useEditorTohtml = (
   editor: PlateEditor<Value>,
@@ -26,4 +26,23 @@ export const useEditorTohtml = (
   }, [ctxNodes])
 
   return htmlString
+}
+
+interface ImageNode extends TElement {
+  url?: string
+}
+
+export const useEditorImage = (
+  editor: PlateEditor<Value>,
+  tokens: Value,
+) => {
+  const ctxNodes: ImageNode | undefined  = tokens.find((n) => isType(editor, n, ELEMENT_IMAGE))
+
+  if (ctxNodes) {
+    return ctxNodes.url
+  } else {
+    return  ""
+  }
+  
+ 
 }
