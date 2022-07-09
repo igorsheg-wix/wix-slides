@@ -1,11 +1,4 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["./src"],
-  "compilerOptions": {
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin"
-      }
-    ]
-  }
+  "include": ["./src"]
 }

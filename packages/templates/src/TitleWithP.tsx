@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { PlateEditor, Value } from '@udecode/plate'
 import { useEditorTohtml } from '@wix-slides/common/hooks/useEditorToHtml'
 import { pxToVw } from '@wix-slides/common/utils/calcs'
@@ -12,10 +11,6 @@ interface SlideTemplate {
 const TitleAndParagraph = ({ tokens, editor }: SlideTemplate) => {
   const heading = useEditorTohtml(editor, tokens, 'h1')
   const paragraph = useEditorTohtml(editor, tokens, 'p')
-
-  useEffect(() => {
-    console.log('From just p', tokens)
-  }, [tokens])
 
   return (
     <Wrap>

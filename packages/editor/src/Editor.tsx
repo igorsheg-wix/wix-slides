@@ -1,15 +1,15 @@
-import React from 'react'
-import { Plate } from '@udecode/plate'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import styles from './Editor.module.scss'
-import DashMenu from './components/DashMenu/DashMenu'
-import { PLUGINS } from './config/plugins'
+import React from "react";
+import { Plate } from "@udecode/plate";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import DashMenu from "./components/DashMenu/DashMenu";
+import { PLUGINS } from "./config/plugins";
+import styles from "./Editor.module.scss";
 
 const DecksterEditor = () => {
   const editableProps = {
     placeholder: "Type '/' to insert, or start writing…",
-  }
+  };
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -26,7 +26,7 @@ const DecksterEditor = () => {
         </Plate>
       </div>
     </DndProvider>
-  )
-}
+  );
+};
 
-export { DecksterEditor }
+export { DecksterEditor };

@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { PlateEditor, Value } from '@udecode/plate'
 import {
   useEditorImage,
@@ -16,10 +15,6 @@ const TitleWithParagraphWithImage = ({ tokens, editor }: SlideTemplate) => {
   const heading = useEditorTohtml(editor, tokens, 'h1')
   const paragraph = useEditorTohtml(editor, tokens, 'p')
   const image = useEditorImage(editor, tokens)
-
-  useEffect(() => {
-    console.log(tokens)
-  }, [tokens])
 
   return (
     <Wrap>
