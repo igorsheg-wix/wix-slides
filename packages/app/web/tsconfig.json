@@ -16,12 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin"
-      }
-    ]
+    "jsx": "react-jsx"
   },
   "references": [{ "path": "./tsconfig.node.json" }]
 
