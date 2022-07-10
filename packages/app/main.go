@@ -7,7 +7,9 @@ import (
 	"log"
 	"net/http"
 	"text/template"
+	"time"
 
+	"github.com/gorilla/mux"
 	vueglue "github.com/torenware/vite-go"
 )
 
@@ -61,7 +63,7 @@ func init() {
 func main() {
 
 	var config vueglue.ViteConfig
-    
+
 	config.Environment = environment
 	config.AssetsPath = appConfig.assets
 	config.EntryPoint = appConfig.jsEntryPoint
@@ -77,7 +79,9 @@ func main() {
 	vueData = glue
 
 	// Set up our router
-	mux := http.NewServeMux()
+	// mux := http.NewServeMux()
+	r := mux.NewRouter()
+	// r.Use(mux.CORSMethodMiddleware(r))
 
 	// Set up a file server for our assets.
 	fsHandler, err := glue.FileServer()
@@ -85,12 +89,23 @@ func main() {
 		log.Println("could not set up static file server", err)
 		return
 	}
-	mux.Handle(config.URLPrefix, fsHandler)
-	mux.Handle("/", logRequest(http.HandlerFunc(pageWithAVue)))
+	r.PathPrefix(config.URLPrefix).Handler(fsHandler)
+	r.Handle("/", logRequest(http.HandlerFunc(pageWithAVue)))
 
-	log.Println("Starting server on :4000")
-	err = http.ListenAndServe(":4000", mux)
-	log.Fatal(err)
+	srv := &http.Server{
+		Handler: r,
+		Addr:    ":4000",
+
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
+	log.Fatal(srv.ListenAndServe())
+
+	// log.Println("Starting server on :4000")
+	// err = http.ListenAndServe(":4000", r)
+	// log.Fatal(err)
 	// and set up your routes and start your server....
 
 }

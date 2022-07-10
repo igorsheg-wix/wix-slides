@@ -4,7 +4,7 @@ import { DecksterEditor } from "@wix-slides/editor/src";
 import styled from "styled-components";
 import Flex from "../components/Flex";
 import Navigation from "../components/Navigation/Navigation";
-import { Viewer } from "../components/viewer/viewer";
+import { Viewer } from "../components/Viewer/Viewer";
 
 const Deckster = () => {
   return (
