@@ -5,8 +5,8 @@ import {
   getEditorString,
   getPointBefore,
   getRange,
-} from '@udecode/plate-core'
-import { Point } from 'slate'
+} from "@udecode/plate-core";
+import { Point } from "slate";
 
 /**
  * Get text and range from trigger to cursor.
@@ -20,38 +20,38 @@ export const getTextFromTrigger = <V extends Value>(
     searchPattern = `\\S+`,
   }: { at: Point; trigger: string; searchPattern?: string }
 ) => {
-  const escapedTrigger = escapeRegExp(trigger)
-  const triggerRegex = new RegExp(`(?:^|\\s)${escapedTrigger}`)
+  const escapedTrigger = escapeRegExp(trigger);
+  const triggerRegex = new RegExp(`(?:^|\\s)${escapedTrigger}`);
 
-  let start: Point | undefined = at
-  let end: Point | undefined
+  let start: Point | undefined = at;
+  let end: Point | undefined;
 
   while (true) {
-    end = start
+    end = start;
 
-    if (!start) break
+    if (!start) break;
 
-    start = getPointBefore(editor, start)
-    const charRange = start && getRange(editor, start, end)
-    const charText = getEditorString(editor, charRange)
+    start = getPointBefore(editor, start);
+    const charRange = start && getRange(editor, start, end);
+    const charText = getEditorString(editor, charRange);
 
     if (!charText.match(searchPattern)) {
-      start = end
-      break
+      start = end;
+      break;
     }
   }
 
   // Range from start to cursor
-  const range = start && getRange(editor, start, at)
-  const text = getEditorString(editor, range)
+  const range = start && getRange(editor, start, at);
+  const text = getEditorString(editor, range);
 
-  if (!range || !text.match(triggerRegex)) return
+  if (!range || !text.match(triggerRegex)) return;
 
   return {
     range,
     textAfterTrigger: text.substring(trigger.length),
-  }
-}
+  };
+};
 
 // export const matchesTriggerAndPattern = (
 //   editor: TEditor<V>,

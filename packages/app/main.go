@@ -61,7 +61,7 @@ func init() {
 func main() {
 
 	var config vueglue.ViteConfig
-
+    
 	config.Environment = environment
 	config.AssetsPath = appConfig.assets
 	config.EntryPoint = appConfig.jsEntryPoint

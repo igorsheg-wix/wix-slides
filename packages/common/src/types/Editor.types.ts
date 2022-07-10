@@ -1,6 +1,7 @@
 import {
   CSSProperties,
   ForwardRefExoticComponent,
+  FunctionComponent,
   HTMLAttributes,
   RefAttributes,
 } from "react";
@@ -82,6 +83,7 @@ import {
   usePlateEditorState,
   usePlateSelectors,
 } from "@udecode/plate";
+import { TablerIconProps } from "@tabler/icons";
 
 /**
  * Text
@@ -383,7 +385,7 @@ export interface MenuItem {
   key: string;
   lable?: string;
   keywords?: string;
-  icon?: ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>;
+  icon?: FunctionComponent<TablerIconProps>;
   shortcut?: string;
   attrs?: Record<any, any>;
 }

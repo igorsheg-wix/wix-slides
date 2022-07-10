@@ -6,34 +6,34 @@ import {
   TTodoListItemElement,
   isBlock,
   setNodes,
-} from '@udecode/plate'
-import { MyAutoformatRule } from '@wix-slides/common/types'
-import { formatList, preFormat } from './autoformatUtils'
+} from "@udecode/plate";
+import { MyAutoformatRule } from "@wix-slides/common/types";
+import { formatList, preFormat } from "./autoformatUtils";
 
 export const autoformatLists: MyAutoformatRule[] = [
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_LI,
-    match: ['* ', '- '],
+    match: ["* ", "- "],
     preFormat,
     format: (editor) => formatList(editor, ELEMENT_UL),
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_LI,
-    match: ['1. ', '1) '],
+    match: ["1. ", "1) "],
     preFormat,
     format: (editor) => formatList(editor, ELEMENT_OL),
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_TODO_LI,
-    match: '[] ',
+    match: "[] ",
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_TODO_LI,
-    match: '[x] ',
+    match: "[x] ",
     format: (editor) =>
       setNodes<TTodoListItemElement>(
         editor,
@@ -43,4 +43,4 @@ export const autoformatLists: MyAutoformatRule[] = [
         }
       ),
   },
-]
+];

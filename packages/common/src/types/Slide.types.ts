@@ -3,7 +3,7 @@ import { PlateEditor, Value } from "@udecode/plate";
 export enum Temaplte {
   cover = "cover",
   titleWithP = "titleWithP",
-  titleWithPWithImage = "titleWithPWithImage"
+  titleWithPWithImage = "titleWithPWithImage",
 }
 
 export interface Slide {
@@ -19,9 +19,9 @@ export interface Slide {
 }
 
 export interface SlideTemplate {
-  tokens: Value
-  editor: PlateEditor<Value>
-  slideBackgroundImage: Slide['backgroundImage']
+  tokens: Value;
+  editor: PlateEditor<Value>;
+  slideBackgroundImage: Slide["backgroundImage"];
 }
 
 export interface SlideElement {

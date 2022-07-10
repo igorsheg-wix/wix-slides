@@ -1,4 +1,4 @@
-import { getNextNonDisabledIndex } from './getNextNonDisabledIndex'
+import { getNextNonDisabledIndex } from "./getNextNonDisabledIndex";
 
 /**
  * Returns the new index in the list, in a circular way. If next value is out of bonds from the total,
@@ -19,26 +19,26 @@ export const getNextWrappingIndex = (
   circular = true
 ) => {
   if (itemCount === 0) {
-    return -1
+    return -1;
   }
 
-  const itemsLastIndex = itemCount - 1
+  const itemsLastIndex = itemCount - 1;
 
   // noinspection SuspiciousTypeOfGuard
   if (
-    typeof baseIndex !== 'number' ||
+    typeof baseIndex !== "number" ||
     baseIndex < 0 ||
     baseIndex >= itemCount
   ) {
-    baseIndex = moveAmount > 0 ? -1 : itemsLastIndex + 1
+    baseIndex = moveAmount > 0 ? -1 : itemsLastIndex + 1;
   }
 
-  let newIndex = baseIndex + moveAmount
+  let newIndex = baseIndex + moveAmount;
 
   if (newIndex < 0) {
-    newIndex = circular ? itemsLastIndex : 0
+    newIndex = circular ? itemsLastIndex : 0;
   } else if (newIndex > itemsLastIndex) {
-    newIndex = circular ? 0 : itemsLastIndex
+    newIndex = circular ? 0 : itemsLastIndex;
   }
 
   const nonDisabledNewIndex = getNextNonDisabledIndex(
@@ -47,11 +47,11 @@ export const getNextWrappingIndex = (
     itemCount,
     getItemNodeFromIndex,
     circular
-  )
+  );
 
   if (nonDisabledNewIndex === -1) {
-    return baseIndex >= itemCount ? -1 : baseIndex
+    return baseIndex >= itemCount ? -1 : baseIndex;
   }
 
-  return nonDisabledNewIndex
-}
+  return nonDisabledNewIndex;
+};

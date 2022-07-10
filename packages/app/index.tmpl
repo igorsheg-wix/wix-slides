@@ -3,10 +3,14 @@
 {{ $react := . }}
     <head>
         <meta charset='utf-8'>
-        <title>Sample Vite-Go Page</title>
+        <title>Wix Slides</title>
         {{ if $react }}
           {{ $react.RenderTags }}
         {{ end }}
+         <link
+      rel="stylesheet"
+      href="https://static.parastorage.com/unpkg/@wix/wix-fonts@1.11.0/madefor.min.css"
+    />
     </head>
     <body>
           <div id="app"></div>

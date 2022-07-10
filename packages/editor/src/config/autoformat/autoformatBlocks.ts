@@ -13,76 +13,76 @@ import {
   insertEmptyCodeBlock,
   insertNodes,
   setNodes,
-} from '@udecode/plate'
-import { MyAutoformatRule } from '@wix-slides/common/types'
-import { preFormat } from './autoformatUtils'
+} from "@udecode/plate";
+import { MyAutoformatRule } from "@wix-slides/common/types";
+import { preFormat } from "./autoformatUtils";
 
 export const autoformatBlocks: MyAutoformatRule[] = [
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_H1,
-    match: '# ',
+    match: "# ",
     preFormat,
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_H2,
-    match: '## ',
+    match: "## ",
     preFormat,
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_H3,
-    match: '### ',
+    match: "### ",
     preFormat,
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_H4,
-    match: '#### ',
+    match: "#### ",
     preFormat,
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_H5,
-    match: '##### ',
+    match: "##### ",
     preFormat,
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_H6,
-    match: '###### ',
+    match: "###### ",
     preFormat,
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_BLOCKQUOTE,
-    match: '> ',
+    match: "> ",
     preFormat,
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_CODE_BLOCK,
-    match: '```',
+    match: "```",
     triggerAtBlockStart: false,
     preFormat,
     format: (editor) => {
       insertEmptyCodeBlock(editor, {
         defaultType: getPluginType(editor, ELEMENT_DEFAULT),
         insertNodesOptions: { select: true },
-      })
+      });
     },
   },
   {
-    mode: 'block',
+    mode: "block",
     type: ELEMENT_HR,
-    match: ['---', '—-', '___ '],
+    match: ["---", "—-", "___ "],
     format: (editor) => {
-      setNodes(editor, { type: ELEMENT_HR })
+      setNodes(editor, { type: ELEMENT_HR });
       insertNodes(editor, {
         type: ELEMENT_DEFAULT,
-        children: [{ text: '' }],
-      })
+        children: [{ text: "" }],
+      });
     },
   },
-]
+];

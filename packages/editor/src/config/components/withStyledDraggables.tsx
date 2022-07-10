@@ -1,6 +1,6 @@
-import React from 'react'
-import { DragHandleDots2Icon } from '@radix-ui/react-icons'
-import Tippy, { TippyProps } from '@tippyjs/react'
+import React from "react";
+import { DragHandleDots2Icon } from "@radix-ui/react-icons";
+import Tippy, { TippyProps } from "@tippyjs/react";
 import {
   ELEMENT_BLOCKQUOTE,
   ELEMENT_CODE_BLOCK,
@@ -18,27 +18,27 @@ import {
   ELEMENT_TODO_LI,
   ELEMENT_UL,
   withDraggables,
-} from '@udecode/plate'
-import styles from '../../Editor.module.scss'
+} from "@udecode/plate";
+import styles from "../../Editor.module.scss";
 
 const GrabberTooltipContent = () => (
   <div style={{ fontSize: 12 }}>
     <div>
-      Drag <span style={{ color: 'rgba(255, 255, 255, 0.45)' }}>to move</span>
+      Drag <span style={{ color: "rgba(255, 255, 255, 0.45)" }}>to move</span>
     </div>
   </div>
-)
+);
 
 export const grabberTooltipProps: TippyProps = {
   content: <GrabberTooltipContent />,
-  placement: 'bottom',
+  placement: "bottom",
   arrow: false,
   offset: [0, 0],
   delay: [300, 0],
   duration: [0, 0],
   hideOnClick: true,
-  theme: 'small',
-}
+  theme: "small",
+};
 
 export const withStyledDraggables = (components: any) => {
   return withDraggables(components, [
@@ -67,28 +67,28 @@ export const withStyledDraggables = (components: any) => {
       onRenderDragHandle: () => {
         return (
           <Tippy {...grabberTooltipProps}>
-            <button type="button" className={styles['drag-button']}>
+            <button type="button" className={styles["drag-button"]}>
               <DragHandleDots2Icon
                 style={{
                   width: 18,
                   height: 18,
-                  color: 'rgba(55, 53, 47, 0.3)',
+                  color: "rgba(55, 53, 47, 0.3)",
                 }}
               />
             </button>
           </Tippy>
-        )
+        );
       },
     },
     {
       key: ELEMENT_H1,
       styles: {
         gutterLeft: {
-          padding: '2px 0 0 0',
-          fontSize: '1.875em',
+          padding: "2px 0 0 0",
+          fontSize: "1.875em",
         },
         blockToolbarWrapper: {
-          height: '26px',
+          height: "26px",
         },
       },
     },
@@ -96,11 +96,11 @@ export const withStyledDraggables = (components: any) => {
       key: ELEMENT_H2,
       styles: {
         gutterLeft: {
-          padding: '1.4em 0 1px',
-          fontSize: '1.5em',
+          padding: "1.4em 0 1px",
+          fontSize: "1.5em",
         },
         blockToolbarWrapper: {
-          height: '1.3em',
+          height: "1.3em",
         },
       },
     },
@@ -108,11 +108,11 @@ export const withStyledDraggables = (components: any) => {
       key: ELEMENT_H3,
       styles: {
         gutterLeft: {
-          padding: '1em 0 1px',
-          fontSize: '1.25em',
+          padding: "1em 0 1px",
+          fontSize: "1.25em",
         },
         blockToolbarWrapper: {
-          height: '1.3em',
+          height: "1.3em",
         },
       },
     },
@@ -120,11 +120,11 @@ export const withStyledDraggables = (components: any) => {
       keys: [ELEMENT_H4, ELEMENT_H5, ELEMENT_H6],
       styles: {
         gutterLeft: {
-          padding: '0.75em 0 0',
-          fontSize: '1.1em',
+          padding: "0.75em 0 0",
+          fontSize: "1.1em",
         },
         blockToolbarWrapper: {
-          height: '1.3em',
+          height: "1.3em",
         },
       },
     },
@@ -132,7 +132,7 @@ export const withStyledDraggables = (components: any) => {
       keys: [ELEMENT_PARAGRAPH, ELEMENT_UL, ELEMENT_OL],
       styles: {
         gutterLeft: {
-          padding: '4px 0 0',
+          padding: "4px 0 0",
         },
       },
     },
@@ -140,7 +140,7 @@ export const withStyledDraggables = (components: any) => {
       key: ELEMENT_BLOCKQUOTE,
       styles: {
         gutterLeft: {
-          padding: '18px 0 0',
+          padding: "18px 0 0",
         },
       },
     },
@@ -148,9 +148,9 @@ export const withStyledDraggables = (components: any) => {
       key: ELEMENT_CODE_BLOCK,
       styles: {
         gutterLeft: {
-          padding: '12px 0 0',
+          padding: "12px 0 0",
         },
       },
     },
-  ])
-}
+  ]);
+};

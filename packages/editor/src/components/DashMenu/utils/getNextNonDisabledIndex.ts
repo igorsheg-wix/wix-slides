@@ -15,22 +15,22 @@ export const getNextNonDisabledIndex = (
   getItemNodeFromIndex: any,
   circular: boolean
 ): number => {
-  const currentElementNode: HTMLOListElement = getItemNodeFromIndex(baseIndex)
+  const currentElementNode: HTMLOListElement = getItemNodeFromIndex(baseIndex);
 
-  if (!currentElementNode || !currentElementNode.hasAttribute('disabled')) {
-    return baseIndex
+  if (!currentElementNode || !currentElementNode.hasAttribute("disabled")) {
+    return baseIndex;
   }
 
   if (moveAmount > 0) {
     for (let index = baseIndex + 1; index < itemCount; index++) {
-      if (!getItemNodeFromIndex(index).hasAttribute('disabled')) {
-        return index
+      if (!getItemNodeFromIndex(index).hasAttribute("disabled")) {
+        return index;
       }
     }
   } else {
     for (let index = baseIndex - 1; index >= 0; index--) {
-      if (!getItemNodeFromIndex(index).hasAttribute('disabled')) {
-        return index
+      if (!getItemNodeFromIndex(index).hasAttribute("disabled")) {
+        return index;
       }
     }
   }
@@ -44,8 +44,8 @@ export const getNextNonDisabledIndex = (
           itemCount,
           getItemNodeFromIndex,
           false
-        )
+        );
   }
 
-  return -1
-}
+  return -1;
+};

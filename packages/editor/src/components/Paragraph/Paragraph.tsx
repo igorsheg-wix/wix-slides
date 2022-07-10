@@ -1,17 +1,17 @@
-import React from 'react'
+import React from "react";
 import {
   Value,
   isCollapsed,
   isElementEmpty,
   useEditorState,
-} from '@udecode/plate'
-import { ElementProps } from '@wix-slides/common/types'
-import classNames from 'classnames'
-import { useFocused, useSelected } from 'slate-react'
-import editorStyles from '../../Editor.module.scss'
+} from "@udecode/plate";
+import { ElementProps } from "@wix-slides/common/types";
+import classNames from "classnames";
+import { useFocused, useSelected } from "slate-react";
+import editorStyles from "../../Editor.module.scss";
 
 interface ParagraphElementProps<V extends Value> extends ElementProps<V> {
-  as?: 'p' | 'span'
+  as?: "p" | "span";
 }
 
 export const ParagraphElement = <V extends Value>(
@@ -21,28 +21,28 @@ export const ParagraphElement = <V extends Value>(
     attributes,
     children,
     nodeProps,
-    as = 'p',
+    as = "p",
     element,
     placeholder = "Type '/' to insert, or start writing…",
-  } = props
+  } = props;
 
-  const el = React.createElement(as, {}, ...children)
+  const el = React.createElement(as, {}, ...children);
 
-  const focused = useFocused()
-  const selected = useSelected()
-  const editor = useEditorState()
+  const focused = useFocused();
+  const selected = useSelected();
+  const editor = useEditorState();
 
-  const isEmptyBlock = isElementEmpty(editor, element)
-  const hideOnBlur = true
+  const isEmptyBlock = isElementEmpty(editor, element);
+  const hideOnBlur = true;
 
   const enabled =
     isEmptyBlock &&
     (!hideOnBlur ||
-      (isCollapsed(editor.selection) && hideOnBlur && focused && selected))
+      (isCollapsed(editor.selection) && hideOnBlur && focused && selected));
 
   const placeholderCss = classNames(
     enabled && editorStyles.emptyBlockPlaceHolder
-  )
+  );
   return (
     <div
       {...attributes}
@@ -58,5 +58,5 @@ export const ParagraphElement = <V extends Value>(
       )}
       {el}
     </div>
-  )
-}
+  );
+};

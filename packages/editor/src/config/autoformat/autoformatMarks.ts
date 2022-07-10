@@ -7,78 +7,78 @@ import {
   MARK_SUBSCRIPT,
   MARK_SUPERSCRIPT,
   MARK_UNDERLINE,
-} from '@udecode/plate'
-import { MyAutoformatRule } from '@wix-slides/common/types'
+} from "@udecode/plate";
+import { MyAutoformatRule } from "@wix-slides/common/types";
 
 export const autoformatMarks: MyAutoformatRule[] = [
   {
-    mode: 'mark',
+    mode: "mark",
     type: [MARK_BOLD, MARK_ITALIC],
-    match: '***',
+    match: "***",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: [MARK_UNDERLINE, MARK_ITALIC],
-    match: '__*',
+    match: "__*",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: [MARK_UNDERLINE, MARK_BOLD],
-    match: '__**',
+    match: "__**",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: [MARK_UNDERLINE, MARK_BOLD, MARK_ITALIC],
-    match: '___***',
+    match: "___***",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_BOLD,
-    match: '**',
+    match: "**",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_UNDERLINE,
-    match: '__',
+    match: "__",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_ITALIC,
-    match: '*',
+    match: "*",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_ITALIC,
-    match: '_',
+    match: "_",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_STRIKETHROUGH,
-    match: '~~',
+    match: "~~",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_SUPERSCRIPT,
-    match: '^',
+    match: "^",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_SUBSCRIPT,
-    match: '~',
+    match: "~",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_HIGHLIGHT,
-    match: '==',
+    match: "==",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_HIGHLIGHT,
-    match: '≡',
+    match: "≡",
   },
   {
-    mode: 'mark',
+    mode: "mark",
     type: MARK_CODE,
-    match: '`',
+    match: "`",
   },
-]
+];

@@ -3,18 +3,18 @@ import {
   ELEMENT_MENTION_INPUT,
   ELEMENT_PARAGRAPH,
   withPlaceholders,
-} from '@udecode/plate'
+} from "@udecode/plate";
 
 export const withStyledPlaceHolders = (components: any) =>
   withPlaceholders(components, [
     {
       key: ELEMENT_H1,
-      placeholder: 'Every section needs a title',
+      placeholder: "Every section needs a title",
       hideOnBlur: true,
     },
     {
       key: ELEMENT_PARAGRAPH,
-      placeholder: 'Type a paragraph',
+      placeholder: "Type a paragraph",
       hideOnBlur: true,
     },
     {
@@ -22,4 +22,4 @@ export const withStyledPlaceHolders = (components: any) =>
       placeholder: "Type '/' to insert...",
       hideOnBlur: false,
     },
-  ])
+  ]);

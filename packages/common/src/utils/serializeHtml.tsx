@@ -4,7 +4,7 @@ import {
   newLinesToHtmlBr,
   stripSlateDataAttributes,
   trimWhitespace,
-} from '@udecode/plate'
+} from "@udecode/plate";
 import {
   EDescendant,
   EElement,
@@ -13,8 +13,8 @@ import {
   SlateProps,
   Value,
   isText,
-} from '@udecode/plate-core'
-import { encode } from 'html-entities'
+} from "@udecode/plate-core";
+import { encode } from "html-entities";
 
 /**
  * Convert Slate Nodes into HTML string
@@ -32,40 +32,40 @@ export const serializeHtml = <V extends Value>(
     /**
      * Slate nodes to convert to HTML.
      */
-    nodes: EDescendant<V>[]
+    nodes: EDescendant<V>[];
 
     /**
      * Enable stripping data attributes
      */
-    stripDataAttributes?: boolean
+    stripDataAttributes?: boolean;
 
     /**
      * List of className prefixes to preserve from being stripped out
      */
-    preserveClassNames?: string[]
+    preserveClassNames?: string[];
 
     /**
      * Slate props to provide if the rendering depends on slate hooks
      */
-    slateProps?: Partial<SlateProps>
+    slateProps?: Partial<SlateProps>;
 
     /**
      * Whether stripping whitespaces from serialized HTML
      * @default true
      */
-    stripWhitespace?: boolean
+    stripWhitespace?: boolean;
 
     /**
      * Optionally convert new line chars (\n) to HTML <br /> tags
      * @default false
      */
-    convertNewLinesToHtmlBr?: boolean
+    convertNewLinesToHtmlBr?: boolean;
   }
 ): string => {
   let result = nodes
     .map((node) => {
       if (isText(node)) {
-        const children = encode(node.text)
+        const children = encode(node.text);
 
         return leafToHtml(editor, {
           props: {
@@ -74,12 +74,12 @@ export const serializeHtml = <V extends Value>(
             children: convertNewLinesToHtmlBr
               ? newLinesToHtmlBr(children)
               : children,
-            attributes: { 'data-slate-leaf': true },
+            attributes: { "data-slate-leaf": true },
             editor,
           },
           slateProps,
           preserveClassNames,
-        })
+        });
       }
 
       return elementToHtml<V>(editor, {
@@ -91,22 +91,22 @@ export const serializeHtml = <V extends Value>(
             convertNewLinesToHtmlBr,
             stripWhitespace,
           }),
-          attributes: { 'data-slate-node': 'element', ref: null },
+          attributes: { "data-slate-node": "element", ref: null },
           editor,
         },
         slateProps,
         preserveClassNames,
-      })
+      });
     })
-    .join('')
+    .join("");
 
   if (stripWhitespace) {
-    result = trimWhitespace(result)
+    result = trimWhitespace(result);
   }
 
   if (stripDataAttributes) {
-    result = stripSlateDataAttributes(result)
+    result = stripSlateDataAttributes(result);
   }
 
-  return result
-}
+  return result;
+};

@@ -5,11 +5,11 @@ import {
   autoformatMath,
   autoformatPunctuation,
   autoformatSmartQuotes,
-} from '@udecode/plate'
-import { MyAutoformatRule } from '@wix-slides/common/types'
-import { autoformatBlocks } from './autoformatBlocks'
-import { autoformatLists } from './autoformatLists'
-import { autoformatMarks } from './autoformatMarks'
+} from "@udecode/plate";
+import { MyAutoformatRule } from "@wix-slides/common/types";
+import { autoformatBlocks } from "./autoformatBlocks";
+import { autoformatLists } from "./autoformatLists";
+import { autoformatMarks } from "./autoformatMarks";
 
 export const autoformatRules = [
   ...autoformatBlocks,
@@ -21,4 +21,4 @@ export const autoformatRules = [
   ...(autoformatLegalHtml as MyAutoformatRule[]),
   ...(autoformatArrow as MyAutoformatRule[]),
   ...(autoformatMath as MyAutoformatRule[]),
-]
+];

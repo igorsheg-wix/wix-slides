@@ -10,7 +10,7 @@ import { gethrNodes } from "@wix-slides/common/utils/get-hr-nodes";
 import SlideUtils from "@wix-slides/common/utils/slide-utils";
 import { Path } from "slate";
 import styled from "styled-components";
-import { WixSlide } from "../../components/Slide";
+import { WixSlide } from "../Slide";
 import useDecksterStore from "../../stores";
 
 const Viewer = () => {

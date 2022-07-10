@@ -1,5 +1,5 @@
-import { MentionPlugin, TMentionInputElement } from '@udecode/plate'
-import { comboboxActions } from '@udecode/plate-combobox'
+import { MentionPlugin, TMentionInputElement } from "@udecode/plate";
+import { comboboxActions } from "@udecode/plate-combobox";
 import {
   PlateEditor,
   TNode,
@@ -15,16 +15,16 @@ import {
   insertNodes,
   insertText,
   setSelection,
-} from '@udecode/plate-core'
-import { ELEMENT_DASHMENU_INPUT } from '@wix-slides/common/types'
-import { Range } from 'slate'
-import useDashMenuStore from '../../stores'
+} from "@udecode/plate-core";
+import { ELEMENT_DASHMENU_INPUT } from "@wix-slides/common/types";
+import { Range } from "slate";
+import useDashMenuStore from "../../stores";
 import {
   findMentionInput,
   isNodeMentionInput,
   isSelectionInMentionInput,
-} from './queries'
-import { removeMentionInput } from './transforms/removeMentionInput'
+} from "./queries";
+import { removeMentionInput } from "./transforms/removeMentionInput";
 
 export const withMention = <
   V extends Value = Value,
@@ -36,8 +36,8 @@ export const withMention = <
   const { type } = getPlugin<Record<string, unknown>, V>(
     editor,
     ELEMENT_DASHMENU_INPUT
-  )
-  const dashMenu = useDashMenuStore.getState()
+  );
+  const dashMenu = useDashMenuStore.getState();
 
   const {
     apply,
@@ -46,57 +46,57 @@ export const withMention = <
     deleteBackward,
     insertFragment: _insertFragment,
     insertTextData,
-  } = editor
+  } = editor;
 
   const stripNewLineAndTrim: (text: string) => string = (text) => {
     return text
       .split(/\r\n|\r|\n/)
       .map((line) => line.trim())
-      .join('')
-  }
+      .join("");
+  };
 
   editor.insertFragment = (fragment) => {
-    const inMentionInput = findMentionInput(editor) !== undefined
+    const inMentionInput = findMentionInput(editor) !== undefined;
     if (!inMentionInput) {
-      return _insertFragment(fragment)
+      return _insertFragment(fragment);
     }
 
     return insertText(
       editor,
-      fragment.map((node) => stripNewLineAndTrim(getNodeString(node))).join('')
-    )
-  }
+      fragment.map((node) => stripNewLineAndTrim(getNodeString(node))).join("")
+    );
+  };
 
   editor.insertTextData = (data) => {
-    const inMentionInput = findMentionInput(editor) !== undefined
+    const inMentionInput = findMentionInput(editor) !== undefined;
     if (!inMentionInput) {
-      return insertTextData(data)
+      return insertTextData(data);
     }
 
-    const text = data.getData('text/plain')
+    const text = data.getData("text/plain");
     if (!text) {
-      return false
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   editor.deleteBackward = (unit) => {
-    const currentMentionInput = findMentionInput(editor)
-    if (currentMentionInput && getNodeString(currentMentionInput[0]) === '') {
-      return removeMentionInput(editor, currentMentionInput[1])
+    const currentMentionInput = findMentionInput(editor);
+    if (currentMentionInput && getNodeString(currentMentionInput[0]) === "") {
+      return removeMentionInput(editor, currentMentionInput[1]);
     }
 
-    deleteBackward(unit)
-  }
+    deleteBackward(unit);
+  };
 
   editor.insertBreak = () => {
     if (isSelectionInMentionInput(editor)) {
-      return
+      return;
     }
 
-    insertBreak()
-  }
+    insertBreak();
+  };
 
   editor.insertText = (text) => {
     if (
@@ -104,7 +104,7 @@ export const withMention = <
       text !== trigger ||
       isSelectionInMentionInput(editor)
     ) {
-      return _insertText(text)
+      return _insertText(text);
     }
 
     // Make sure a mention input is created at the beginning of line or after a whitespace
@@ -115,7 +115,7 @@ export const withMention = <
         editor.selection,
         getPointBefore(editor, editor.selection)
       )
-    )
+    );
 
     const nextChar = getEditorString(
       editor,
@@ -124,12 +124,12 @@ export const withMention = <
         editor.selection,
         getPointAfter(editor, editor.selection)
       )
-    )
+    );
 
-    const beginningOfLine = previousChar === ''
-    const endOfLine = nextChar === ''
-    const precededByWhitespace = previousChar === ' '
-    const followedByWhitespace = nextChar === ' '
+    const beginningOfLine = previousChar === "";
+    const endOfLine = nextChar === "";
+    const precededByWhitespace = previousChar === " ";
+    const followedByWhitespace = nextChar === " ";
 
     if (
       (beginningOfLine || precededByWhitespace) &&
@@ -137,53 +137,53 @@ export const withMention = <
     ) {
       const data: TMentionInputElement = {
         type,
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         trigger,
-      }
+      };
       if (inputCreation) {
-        data[inputCreation.key] = inputCreation.value
+        data[inputCreation.key] = inputCreation.value;
       }
-      return insertNodes<TMentionInputElement>(editor, data)
+      return insertNodes<TMentionInputElement>(editor, data);
     }
 
-    return _insertText(text)
-  }
+    return _insertText(text);
+  };
 
   editor.apply = (operation) => {
-    apply(operation)
+    apply(operation);
 
-    if (operation.type === 'insert_text' || operation.type === 'remove_text') {
-      const currentMentionInput = findMentionInput(editor)
+    if (operation.type === "insert_text" || operation.type === "remove_text") {
+      const currentMentionInput = findMentionInput(editor);
       if (currentMentionInput) {
-        dashMenu.setText(getNodeString(currentMentionInput[0]))
+        dashMenu.setText(getNodeString(currentMentionInput[0]));
       }
-    } else if (operation.type === 'set_selection') {
+    } else if (operation.type === "set_selection") {
       const previousMentionInputPath = Range.isRange(operation.properties)
         ? findMentionInput(editor, { at: operation.properties })?.[1]
-        : undefined
+        : undefined;
 
       const currentMentionInputPath = Range.isRange(operation.newProperties)
         ? findMentionInput(editor, { at: operation.newProperties })?.[1]
-        : undefined
+        : undefined;
 
       if (previousMentionInputPath && !currentMentionInputPath) {
-        removeMentionInput(editor, previousMentionInputPath)
+        removeMentionInput(editor, previousMentionInputPath);
       }
 
       if (currentMentionInputPath) {
-        comboboxActions.targetRange(editor.selection)
+        comboboxActions.targetRange(editor.selection);
       }
     } else if (
-      operation.type === 'insert_node' &&
+      operation.type === "insert_node" &&
       isNodeMentionInput(editor, operation.node as TNode)
     ) {
       if ((operation.node as TMentionInputElement).trigger !== trigger) {
-        return
+        return;
       }
 
       const text =
         ((operation.node as TMentionInputElement).children as TText[])[0]
-          ?.text ?? ''
+          ?.text ?? "";
 
       if (
         inputCreation === undefined ||
@@ -195,21 +195,21 @@ export const withMention = <
         setSelection(editor, {
           anchor: { path: operation.path.concat([0]), offset: text.length },
           focus: { path: operation.path.concat([0]), offset: text.length },
-        })
+        });
 
-        dashMenu.open()
+        dashMenu.open();
       }
     } else if (
-      operation.type === 'remove_node' &&
+      operation.type === "remove_node" &&
       isNodeMentionInput(editor, operation.node as TNode)
     ) {
       if ((operation.node as TMentionInputElement).trigger !== trigger) {
-        return
+        return;
       }
 
-      dashMenu.reset()
+      dashMenu.reset();
     }
-  }
+  };
 
-  return editor
-}
+  return editor;
+};

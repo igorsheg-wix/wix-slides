@@ -1,7 +1,6 @@
 import React from "react";
 import { usePlateSelectors } from "@udecode/plate";
 import type { Slide } from "@wix-slides/common/types";
-import { getSlideChildsWithMeasurement } from "@wix-slides/common/utils/measure";
 import { templateEngine } from "@wix-slides/common/utils/template-engine";
 import { templates } from "@wix-slides/templates";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
