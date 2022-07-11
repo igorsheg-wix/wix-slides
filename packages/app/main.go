@@ -44,7 +44,6 @@ func init() {
 func main() {
 
 	r := mux.NewRouter()
-
 	viteconfig := handlers.NewViteConfig(environment, dist)
 
 	glue, err := vueglue.NewVueGlue(&viteconfig)
@@ -59,6 +58,12 @@ func main() {
 		log.Println("could not set up static file server", err)
 		return
 	}
+
+	authApi := r.PathPrefix("/oauth").Subrouter()
+	authApi.HandleFunc("/login", handlers.OauthGoogleLogin)
+	authApi.HandleFunc("/callback", handlers.OauthGoogleCallback)
+	r.HandleFunc("/api/me", handlers.UserHandler)
+
 	r.PathPrefix(viteconfig.URLPrefix).Handler(fsHandler)
 	r.PathPrefix("/").Handler(logRequest(http.HandlerFunc(pageWithAVue)))
 

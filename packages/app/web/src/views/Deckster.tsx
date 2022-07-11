@@ -1,10 +1,9 @@
-import React from "react";
 import { PlateProvider } from "@udecode/plate";
 import { DecksterEditor } from "@wix-slides/editor/src";
 import styled from "styled-components";
 import Flex from "../components/Flex";
 import Navigation from "../components/Navigation/Navigation";
-import { Viewer } from "../components/Viewer/Viewer";
+import { Viewer } from "../components/viewer";
 
 const Deckster = () => {
   return (
