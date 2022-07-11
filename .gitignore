@@ -25,3 +25,4 @@ dist-ssr
 *.sw?
 main
 wix-slides.sh
+pb_data

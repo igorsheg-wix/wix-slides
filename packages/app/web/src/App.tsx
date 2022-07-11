@@ -15,9 +15,9 @@ const App: FC = () => {
         <Route
           path="/editor"
           element={
-            <RequireAuth>
-              <Deckster />
-            </RequireAuth>
+            // <RequireAuth>
+            <Deckster />
+            // </RequireAuth>
           }
         />
       </Routes>

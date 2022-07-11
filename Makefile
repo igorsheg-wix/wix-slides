@@ -7,20 +7,24 @@ VITE_PORT=3000
 GO_APP_PORT=4000
 
 dev: 
-	@echo starting dev server
-	@-pkill -SIGTERM -f "yarn dev"
-	@cd $(WEB_DIR); yarn dev &
-	@cd $(APP_DIR); go run . -env development
+	@echo starting dev envioemrnt
+	@cd $(WEB_DIR); yarn dev --logLevel silent &
+	@cd $(APP_DIR); go run . -env development 
 
 
 build-web:
 	@echo building web app
 	@-pkill -SIGTERM -f "yarn build"
-	@cd $(WEB_DIR); yarn build 
+	@cd $(WEB_DIR); yarn; yarn build 
 
 build-backend:
 	@echo building backend
-	@cd $(APP_DIR); go build -o wix-slides.sh
+	@cd $(APP_DIR); CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags="-w -s" -o wix-slides .
+
+
+preview: 
+	@echo starting prodction app
+	@cd $(APP_DIR); ./wix-slides.sh -env production
 
 build: 
 	@echo building app
@@ -28,6 +32,6 @@ build:
 
 clean: 
 	@echo cleaing dev enviorment
-	cd $(APP_DIR); rm wix-slides.sh & rm -rf web/dist
+	cd $(APP_DIR); rm wix-slides & rm -rf web/dist
 
 

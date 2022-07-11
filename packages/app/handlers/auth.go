@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"bytes"
 	"context"
 	"crypto/rand"
+	"database/sql"
 	"encoding/base64"
 	"encoding/gob"
 	"encoding/json"
@@ -15,6 +17,7 @@ import (
 
 	"github.com/gorilla/sessions"
 	"github.com/joho/godotenv"
+	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
@@ -23,23 +26,37 @@ var conf *oauth2.Config
 var store = sessions.NewCookieStore([]byte("something-very-secret"))
 var state string
 
+// var environment string
+
 func randToken() string {
 	b := make([]byte, 32)
 	rand.Read(b)
 	return base64.StdEncoding.EncodeToString(b)
 }
 
+func jsonPrettyPrint(in string) string {
+	var out bytes.Buffer
+	err := json.Indent(&out, []byte(in), "", "\t")
+	if err != nil {
+		return in
+	}
+	return out.String()
+}
+
 func init() {
+
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("No .env file")
+	}
+
 	store.Options = &sessions.Options{
 		Domain:   "localhost",
 		Path:     "/",
-		MaxAge:   3600 * 8, // 8 hours
+		MaxAge:   3600 * 8,
 		HttpOnly: true,
 	}
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Some error occured. Err: %s", err)
-	}
+
 	gob.Register(models.User{})
 
 	conf = &oauth2.Config{
@@ -49,6 +66,13 @@ func init() {
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 		Endpoint:     google.Endpoint,
 	}
+	// fmt.Println("Google ouath config -------->", jsonPrettyPrint(conf))
+
+	empJSON, err := json.MarshalIndent(conf, "", "  ")
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+	fmt.Printf("MarshalIndent funnction output %s\n", string(empJSON))
 }
 
 func httpError(w http.ResponseWriter, err error, reason string) {
@@ -57,8 +81,6 @@ func httpError(w http.ResponseWriter, err error, reason string) {
 }
 
 func OauthGoogleLogin(w http.ResponseWriter, r *http.Request) {
-
-	// oauthState := generateStateOauthCookie(w)
 
 	state = randToken()
 	store, err := store.Get(r, "session")
@@ -105,23 +127,55 @@ func OauthGoogleCallback(w http.ResponseWriter, r *http.Request) {
 	store.Save(r, w)
 	fmt.Println("Email body: ", user)
 
+	db, err := sql.Open("sqlite3", "./foo.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	// sqlStmt := `
+	// create table foo (id integer not null primary key, name text);
+	// delete from foo;
+	// `
+	// _, err = db.Exec(sqlStmt)
+	// if err != nil {
+	// 	log.Printf("%q: %s\n", err, sqlStmt)
+	// 	return
+	// }
+
 	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 
 }
 
-func UserHandler(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, "session")
-	if err != nil {
-		httpError(w, err, "getting session")
-		return
-	}
-	v := session.Values["user"]
+// func LogginMiddleware(w http.ResponseWriter, r *http.Request) {
+// 	session, err := store.Get(r, "session")
+// 	if err != nil {
+// 		httpError(w, err, "getting session")
+// 		return
+// 	}
+// 	v := session.Values["user"]
 
-	if v == nil {
-		httpError(w, err, "Failed fetching user from session")
-		// http.Redirect(w, r, "/login", http.StatusMovedPermanently)
-	}
+// 	if v == nil {
+// 		httpError(w, err, "Failed fetching user from session")
+// 		http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+// 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(v)
+// 	w.Header().Set("Content-Type", "application/json")
+// 	json.NewEncoder(w).Encode(v)
+// }
+
+func LogginMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		session, err := store.Get(r, "session")
+		if err != nil {
+			http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		}
+
+		v := session.Values["user"]
+		if v == nil {
+			http.Redirect(w, r, "/login", http.StatusMovedPermanently)
+		}
+
+		next.ServeHTTP(w, r)
+	})
 }
