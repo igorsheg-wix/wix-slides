@@ -24,5 +24,6 @@ dist-ssr
 *.sln
 *.sw?
 main
+wix-slides
 wix-slides.sh
 pb_data

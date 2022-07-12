@@ -9,7 +9,7 @@ GO_APP_PORT=4000
 dev: 
 	@echo starting dev envioemrnt
 	@cd $(WEB_DIR); yarn dev --logLevel silent &
-	@cd $(APP_DIR); go run . -env development 
+	@cd $(APP_DIR); APP_ENV=development DOMAIN=localhost PORT=4000 go run .
 
 
 build-web:
@@ -24,7 +24,7 @@ build-backend:
 
 preview: 
 	@echo starting prodction app
-	@cd $(APP_DIR); ./wix-slides.sh -env production
+	@cd $(APP_DIR); ./wix-slides.sh
 
 build: 
 	@echo building app

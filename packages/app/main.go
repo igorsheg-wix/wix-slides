@@ -2,12 +2,12 @@ package main
 
 import (
 	"embed"
-	"flag"
 	"fmt"
 	"html/template"
 	"igors-wix/wix-slides/handlers"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/fatih/color"
@@ -16,7 +16,7 @@ import (
 )
 
 var vueData *vueglue.VueGlue
-var environment string
+var Environment string
 
 //go:embed "web"
 var dist embed.FS
@@ -40,17 +40,13 @@ func pageWithAVue(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, vueData)
 }
 
-func init() {
-	flag.StringVar(&environment, "env", "development", "development|production")
-	flag.Parse()
-
-}
-
 func main() {
+	Environment = os.Getenv("APP_ENV")
+	fmt.Println(Environment)
 
 	r := mux.NewRouter()
 
-	viteconfig := handlers.NewViteConfig(environment, dist)
+	viteconfig := handlers.NewViteConfig(Environment, dist)
 
 	glue, err := vueglue.NewVueGlue(&viteconfig)
 	if err != nil {
@@ -76,13 +72,12 @@ func main() {
 
 	srv := &http.Server{
 		Handler:      r,
-		Addr:         "localhost:4000",
+		Addr:         "0.0.0.0:4000",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
 	color.Green("Starting Wix Slides server")
-	// color.Green(">", "Local")
 	fmt.Printf("› Address: %s\n", color.CyanString("http://%s", srv.Addr))
 
 	log.Fatal(srv.ListenAndServe())
