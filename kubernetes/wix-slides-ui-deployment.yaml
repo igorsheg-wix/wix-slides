@@ -14,7 +14,7 @@ spec:
         app: wix-slides-ui
     spec:
       containers:
-        - image: gcr.io/igorsheg-wix/wix-slides:latest
-        name: wix-slides-ui
-        ports:
+        - image: ghcr.io/igorsheg-wix/wix-slides:latest
+          name: wix-slides-ui
+          ports:
         - containerPort: 4000 
