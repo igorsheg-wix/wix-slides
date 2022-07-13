@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wix-slides-ui
+  name: wix-slides-deployment
+  labels:
+    app: wix-slides
 spec:
-  replicas: 1
-  revisionHistoryLimit: 3
+  replicas: 3
   selector:
     matchLabels:
-      app: wix-slides-ui
+      app: wix-slides
   template:
     metadata:
       labels:
-        app: wix-slides-ui
+        app: wix-slides
     spec:
       containers:
-      - image: ghcr.io/igorsheg-wix/wix-slides:latest
-        name: wix-slides-ui
-        ports:
-        - containerPort: 4000
+        - name: wix-slides
+          image: ghcr.io/igorsheg-wix/wix-slides:latest
+          ports:
+            - containerPort: 4000
