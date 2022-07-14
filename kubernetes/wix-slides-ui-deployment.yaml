@@ -19,3 +19,5 @@ spec:
           image: ghcr.io/igorsheg-wix/wix-slides:latest
           ports:
             - containerPort: 4000
+      imagePullSecrets:
+        - name: dockerconfigjson-github-com
