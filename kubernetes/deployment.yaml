@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wix-slides-deployment
+  labels:
+    app: wix-slides
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wix-slides
+  template:
+    metadata:
+      labels:
+        app: wix-slides
+    spec:
+      containers:
+        - name: wix-slides
+          image: ghcr.io/igorsheg-wix/wix-slides:latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: DOMAIN
+              valueFrom:
+                secretKeyRef:
+                name: wix-slides-app
+                key: domain
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                name: wix-slides-app
+                key: client-id
+            - name: CLIENT_SECRET
+              valueFrom:
+              secretKeyRef:
+                name: wix-slides-app
+                key: client-secret
+      imagePullSecrets:
+        - name: dockerconfigjson-github-com
