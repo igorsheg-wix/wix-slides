@@ -51,17 +51,16 @@ spec:
       port: 4000
       targetPort: 4000
 ---
-apiVersion: extensions/v1beta1
-kind: Ingress
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: wix-slides-ingress
-  annotations:
-    kubernetes.io/ingress.class: traefik
 spec:
-  rules:
-    - host: slides.yago.sh
-      http:
-        paths:
-          - backend:
-              serviceName: wix-slides-service
-              servicePort: 4000
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`slides.yago.sh`)
+      kind: Rule
+      services:
+        - name: wix-slides-app
+          port: 4000
