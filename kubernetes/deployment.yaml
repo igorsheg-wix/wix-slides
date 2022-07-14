@@ -42,14 +42,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: wix-slides-service
+  name: wix-slides
+  labels:
+    app: wix-slides
 spec:
+  ports:
+    - port: 4000
+      name: wix-slides
   selector:
     app: wix-slides
-  ports:
-    - protocol: TCP
-      port: 4000
-      targetPort: 4000
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
