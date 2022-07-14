@@ -63,5 +63,5 @@ spec:
     - match: Host(`slides.yago.sh`)
       kind: Rule
       services:
-        - name: wix-slides-app
+        - name: wix-slides
           port: 4000
