@@ -37,3 +37,31 @@ spec:
                   key: CLIENT_SECRET
       imagePullSecrets:
         - name: dockerconfigjson-github-com
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wix-slides-service
+spec:
+  selector:
+    app: wix-slides
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 4000
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: wix-slides-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: slides.yago.sh
+      http:
+        paths:
+          - backend:
+              serviceName: wix-slides-service
+              servicePort: 4000
