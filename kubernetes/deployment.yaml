@@ -23,8 +23,8 @@ spec:
             - name: DOMAIN
               valueFrom:
                 secretKeyRef:
-                name: wix-slides-app
-                key: domain
+                  name: wix-slides-app
+                  key: domain
             - name: CLIENT_ID
               valueFrom:
                 secretKeyRef:
