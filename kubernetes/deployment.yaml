@@ -24,16 +24,16 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: wix-slides-app
-                  key: domain
+                  key: DOMAIN
             - name: CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: wix-slides-app
-                  key: client-id
+                  key: CLIENT_ID
             - name: CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: wix-slides-app
-                  key: client-secret
+                  key: CLIENT_SECRET
       imagePullSecrets:
         - name: dockerconfigjson-github-com
