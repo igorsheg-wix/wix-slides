@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wix-slides-deployment
+  labels:
+    app: wix-slides
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: wix-slides
+  template:
+    metadata:
+      labels:
+        app: wix-slides
+    spec:
+      containers:
+        - name: wix-slides
+          image: ghcr.io/igorsheg-wix/wix-slides:latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: wix-slides-app
+                  key: DOMAIN
+            - name: CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: wix-slides-app
+                  key: CLIENT_ID
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: wix-slides-app
+                  key: CLIENT_SECRET
+      imagePullSecrets:
+        - name: dockerconfigjson-github-com
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wix-slides
+  labels:
+    app: wix-slides
+spec:
+  ports:
+    - port: 4000
+      name: wix-slides
+  selector:
+    app: wix-slides
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wix-slides-ingress
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`slides.yago.sh`)
+      kind: Rule
+      services:
+        - name: wix-slides
+          port: 4000
