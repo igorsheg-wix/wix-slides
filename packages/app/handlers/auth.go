@@ -3,7 +3,6 @@ package handlers
 import (
 	"context"
 	"crypto/rand"
-	"database/sql"
 	"encoding/base64"
 	"encoding/gob"
 	"encoding/json"
@@ -11,7 +10,6 @@ import (
 	"igors-wix/wix-slides/config"
 	"igors-wix/wix-slides/models"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 
@@ -62,11 +60,11 @@ func init() {
 		Endpoint:     google.Endpoint,
 	}
 
-	empJSON, err := json.MarshalIndent(conf, "", "  ")
-	if err != nil {
-		log.Fatalf(err.Error())
-	}
-	fmt.Printf("MarshalIndent funnction output %s\n", string(empJSON))
+	// empJSON, err := json.MarshalIndent(conf, "", "  ")
+	// if err != nil {
+	// 	log.Fatalf(err.Error())
+	// }
+	// fmt.Printf("MarshalIndent funnction output %s\n", string(empJSON))
 }
 
 func httpError(w http.ResponseWriter, err error, reason string) {
@@ -119,13 +117,6 @@ func OauthGoogleCallback(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(data, &user)
 	store.Values["user"] = user
 	store.Save(r, w)
-	fmt.Println("Email body: ", user)
-
-	db, err := sql.Open("sqlite3", "./foo.db")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
 
 	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 

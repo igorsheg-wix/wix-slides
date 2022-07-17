@@ -26,5 +26,5 @@ const Wrap = styled(Flex)`
   padding: 60px;
   background: white;
   box-sizing: border-box;
-  box-shadow: 0 1px 0 rgb(199, 199, 199);
+  box-shadow: inset 0 -1px 0 rgb(199, 199, 199);
 `;
