@@ -10,7 +10,6 @@ export const templates: Record<
     render: () => ({
       tokens,
       slideBackgroundImage,
-      editor,
     }: SlideTemplate) => JSX.Element | null
   }
 > = {

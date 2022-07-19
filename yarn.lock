@@ -1027,6 +1027,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:^18.0.6":
+  version: 18.0.6
+  resolution: "@types/node@npm:18.0.6"
+  checksum: 780f8885a6b6eb12f4c0246617747fdc37a451931b3c01ce8148d356c0903b705dcb16cc6a914de63d48b0dc1b002c7a3dfae681f580e1761aa551d3cd996813
+  languageName: node
+  linkType: hard
+
 "@types/prop-types@npm:*":
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
@@ -2303,7 +2310,7 @@ __metadata:
     "@rollup/plugin-alias": ^3.1.9
     "@types/dompurify": ^2.3.3
     "@types/marked": ^4.0.3
-    "@types/node": ^18.0.3
+    "@types/node": ^18.0.6
     "@types/react": ^18.0.0
     "@types/react-dom": ^18.0.0
     "@types/styled-components": ^5.1.25
@@ -2338,12 +2345,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@wix-slides/common@workspace:packages/common"
   dependencies:
+    "@lexical/react": ^0.3.7
     "@radix-ui/react-icons": ^1.1.1
     "@types/react": ^18.0.15
     "@udecode/plate": ^14.1.0
     classnames: ^2.3.1
     dompurify: ^2.3.8
     is-hotkey: ^0.2.0
+    lexical: ^0.3.7
     marked: ^4.0.17
     react: ^18.2.0
     react-dnd: ^16.0.1
@@ -2425,6 +2434,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@wix-slides/templates@workspace:packages/templates"
   dependencies:
+    "@lexical/react": ^0.3.7
     "@radix-ui/react-icons": ^1.1.1
     "@radix-ui/react-visually-hidden": ^0.1.4
     "@types/react": ^18.0.15
@@ -2432,6 +2442,7 @@ __metadata:
     "@udecode/plate": ^14.1.0
     classnames: ^2.3.1
     is-hotkey: ^0.2.0
+    lexical: ^0.3.7
     react: ^18.2.0
     react-dnd: ^16.0.1
     react-dnd-html5-backend: ^16.0.1

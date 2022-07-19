@@ -1,4 +1,4 @@
-import { PlateEditor, Value } from "@udecode/plate";
+import { LexicalNode } from "lexical";
 
 export enum Temaplte {
   cover = "cover",
@@ -13,14 +13,12 @@ export interface Slide {
   width: number;
   backgroundImage: string;
   elements: SlideElement[] | null;
-  tokens: Value;
-
+  tokens: LexicalNode[];
   html: HTMLElement[] | null;
 }
 
 export interface SlideTemplate {
-  tokens: Value;
-  editor: PlateEditor<Value>;
+  tokens: LexicalNode[];
   slideBackgroundImage: Slide["backgroundImage"];
 }
 

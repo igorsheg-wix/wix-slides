@@ -1,16 +1,15 @@
-import { PlateEditor, Value } from '@udecode/plate'
 import { useEditorTohtml } from '@wix-slides/common/hooks/useEditorToHtml'
 import { pxToVw } from '@wix-slides/common/utils/calcs'
+import { LexicalNode } from 'lexical'
 import styled from 'styled-components'
 
 interface SlideTemplate {
-  tokens: Value
-  editor: PlateEditor<Value>
+  tokens: LexicalNode[]
 }
 
-const TitleAndParagraph = ({ tokens, editor }: SlideTemplate) => {
-  const heading = useEditorTohtml(editor, tokens, 'h1')
-  const paragraph = useEditorTohtml(editor, tokens, 'p')
+const TitleAndParagraph = ({ tokens }: SlideTemplate) => {
+  const heading = useEditorTohtml(tokens, 'heading')
+  const paragraph = useEditorTohtml(tokens, 'paragraph')
 
   return (
     <Wrap>

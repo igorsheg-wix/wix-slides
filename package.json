@@ -6,7 +6,11 @@
   "author": "igors-wix <igors@wix.com>",
   "private": true,
   "workspaces": [
-    "packages/**/*"
+    "packages/app/web",
+    "packages/common",
+    "packages/editor",
+    "packages/lexical",
+    "packages/templates"
   ],
   "scripts": {
     "lint": "eslint --ext ts,tsx . --fix"

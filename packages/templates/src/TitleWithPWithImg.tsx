@@ -1,20 +1,19 @@
-import { PlateEditor, Value } from '@udecode/plate'
 import {
   useEditorImage,
   useEditorTohtml,
 } from '@wix-slides/common/hooks/useEditorToHtml'
 import { pxToVw } from '@wix-slides/common/utils/calcs'
+import { LexicalNode } from 'lexical'
 import styled from 'styled-components'
 
 interface SlideTemplate {
-  tokens: Value
-  editor: PlateEditor<Value>
+  tokens: LexicalNode[]
 }
 
-const TitleWithParagraphWithImage = ({ tokens, editor }: SlideTemplate) => {
-  const heading = useEditorTohtml(editor, tokens, 'h1')
-  const paragraph = useEditorTohtml(editor, tokens, 'p')
-  const image = useEditorImage(editor, tokens)
+const TitleWithParagraphWithImage = ({ tokens }: SlideTemplate) => {
+  const heading = useEditorTohtml(tokens, 'heading')
+  const paragraph = useEditorTohtml(tokens, 'paragraph')
+  const imageSrc = useEditorImage(tokens)
 
   return (
     <Wrap>
@@ -22,9 +21,8 @@ const TitleWithParagraphWithImage = ({ tokens, editor }: SlideTemplate) => {
         {heading()}
         {paragraph()}
       </ContentWrap>
-
       <SlideImage>
-        <img src={image} />
+        <img src={imageSrc()} />
       </SlideImage>
     </Wrap>
   )
@@ -45,15 +43,11 @@ const SlideImage = styled.div`
   justify-content: center;
   box-sizing: border-box;
   flex-direction: column;
-  /* margin-right: ${pxToVw(80)}vw;
-  margin-top: ${pxToVw(80)}vw;
-  margin-bottom: ${pxToVw(80)}vw; */
   overflow: hidden;
   padding: ${pxToVw(80)}vw;
 
   img {
     height: 100%;
-    /* width: 100%; */
     object-fit: cover;
     display: block;
   }

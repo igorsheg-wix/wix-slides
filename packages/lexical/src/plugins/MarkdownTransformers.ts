@@ -22,7 +22,7 @@ import {
 import {
   $createHorizontalRuleNode,
   $isHorizontalRuleNode,
-} from '@lexical/react/LexicalHorizontalRuleNode'
+} from '../nodes/LexicalHorizontalRuleNode'
 import {
   $createTableCellNode,
   $createTableNode,

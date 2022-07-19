@@ -13,7 +13,7 @@ import {
   INSERT_UNORDERED_LIST_COMMAND,
 } from '@lexical/list'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode'
+import { INSERT_HORIZONTAL_RULE_COMMAND } from '../nodes/LexicalHorizontalRuleNode'
 import {
   LexicalTypeaheadMenuPlugin,
   TypeaheadOption,
@@ -42,7 +42,21 @@ import {
   InsertTableDialog,
   InsertTweetDialog,
 } from './ToolbarPlugin'
-import { IconLetterT } from '@tabler/icons'
+import {
+  IconBlockquote,
+  IconCode,
+  IconDivide,
+  IconH1,
+  IconH2,
+  IconH3,
+  IconLetterT,
+  IconList,
+  IconListCheck,
+  IconListNumbers,
+  IconPhoto,
+  IconSeparator,
+  IconSeparatorHorizontal,
+} from '@tabler/icons'
 
 class ComponentPickerOption extends TypeaheadOption {
   // What shows up in the editor
@@ -166,6 +180,11 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
   }, [editor, queryString])
 
   const options = useMemo(() => {
+    const headerIcons = {
+      1: <IconH1 />,
+      2: <IconH2 />,
+      3: <IconH3 />,
+    }
     const baseOptions = [
       new ComponentPickerOption('Paragraph', {
         icon: <IconLetterT />,
@@ -181,7 +200,7 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
       ...Array.from({ length: 3 }, (_, i) => i + 1).map(
         (n) =>
           new ComponentPickerOption(`Heading ${n}`, {
-            icon: <i className={`icon h${n}`} />,
+            icon: headerIcons[n],
             keywords: ['heading', 'header', `h${n}`],
             onSelect: () =>
               editor.update(() => {
@@ -195,34 +214,26 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
               }),
           })
       ),
-      new ComponentPickerOption('Table', {
-        icon: <i className="icon table" />,
-        keywords: ['table', 'grid', 'spreadsheet', 'rows', 'columns'],
-        onSelect: () =>
-          showModal('Insert Table', (onClose) => (
-            <InsertTableDialog activeEditor={editor} onClose={onClose} />
-          )),
-      }),
       new ComponentPickerOption('Numbered List', {
-        icon: <i className="icon number" />,
+        icon: <IconListNumbers />,
         keywords: ['numbered list', 'ordered list', 'ol'],
         onSelect: () =>
           editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined),
       }),
       new ComponentPickerOption('Bulleted List', {
-        icon: <i className="icon bullet" />,
+        icon: <IconList />,
         keywords: ['bulleted list', 'unordered list', 'ul'],
         onSelect: () =>
           editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined),
       }),
       new ComponentPickerOption('Check List', {
-        icon: <i className="icon check" />,
+        icon: <IconListCheck />,
         keywords: ['check list', 'todo list'],
         onSelect: () =>
           editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined),
       }),
       new ComponentPickerOption('Quote', {
-        icon: <i className="icon quote" />,
+        icon: <IconBlockquote />,
         keywords: ['block quote'],
         onSelect: () =>
           editor.update(() => {
@@ -233,7 +244,7 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
           }),
       }),
       new ComponentPickerOption('Code', {
-        icon: <i className="icon code" />,
+        icon: <IconCode />,
         keywords: ['javascript', 'python', 'js', 'codeblock'],
         onSelect: () =>
           editor.update(() => {
@@ -252,62 +263,19 @@ export default function ComponentPickerMenuPlugin(): JSX.Element {
           }),
       }),
       new ComponentPickerOption('Divider', {
-        icon: <i className="icon horizontal-rule" />,
+        icon: <IconSeparator />,
         keywords: ['horizontal rule', 'divider', 'hr'],
         onSelect: () =>
           editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined),
       }),
-      new ComponentPickerOption('Poll', {
-        icon: <i className="icon poll" />,
-        keywords: ['poll', 'vote'],
-        onSelect: () =>
-          showModal('Insert Poll', (onClose) => (
-            <InsertPollDialog activeEditor={editor} onClose={onClose} />
-          )),
-      }),
-      new ComponentPickerOption('Tweet', {
-        icon: <i className="icon tweet" />,
-        keywords: ['twitter', 'embed', 'tweet'],
-        onSelect: () =>
-          showModal('Insert Tweet', (onClose) => (
-            <InsertTweetDialog activeEditor={editor} onClose={onClose} />
-          )),
-      }),
-      new ComponentPickerOption('Equation', {
-        icon: <i className="icon equation" />,
-        keywords: ['equation', 'latex', 'math'],
-        onSelect: () =>
-          showModal('Insert Equation', (onClose) => (
-            <InsertEquationDialog activeEditor={editor} onClose={onClose} />
-          )),
-      }),
-      new ComponentPickerOption('GIF', {
-        icon: <i className="icon gif" />,
-        keywords: ['gif', 'animate', 'image', 'file'],
-        onSelect: () =>
-          editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
-            altText: 'Cat typing on a laptop',
-            src: 'asd',
-          }),
-      }),
       new ComponentPickerOption('Image', {
-        icon: <i className="icon image" />,
+        icon: <IconPhoto />,
         keywords: ['image', 'photo', 'picture', 'file'],
         onSelect: () =>
           showModal('Insert Image', (onClose) => (
             <InsertImageDialog activeEditor={editor} onClose={onClose} />
           )),
       }),
-      ...['left', 'center', 'right', 'justify'].map(
-        (alignment) =>
-          new ComponentPickerOption(`Align ${alignment}`, {
-            icon: <i className={`icon ${alignment}-align`} />,
-            keywords: ['align', 'justify', alignment],
-            onSelect: () =>
-              // @ts-ignore Correct types, but since they're dynamic TS doesn't like it.
-              editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, alignment),
-          })
-      ),
     ]
 
     const dynamicOptions = getDynamicOptions()

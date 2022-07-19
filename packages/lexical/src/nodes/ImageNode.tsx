@@ -24,10 +24,6 @@ import type {
 
 import './ImageNode.css'
 
-import {
-  CollaborationPlugin,
-  useCollaborationContext,
-} from '@lexical/react/LexicalCollaborationPlugin'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
@@ -48,7 +44,6 @@ import {
   KEY_BACKSPACE_COMMAND,
   KEY_DELETE_COMMAND,
 } from 'lexical'
-import * as React from 'react'
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
 import { useSettings } from '../context/SettingsContext'
@@ -157,9 +152,7 @@ function ImageComponent({
   const [isSelected, setSelected, clearSelection] =
     useLexicalNodeSelection(nodeKey)
   const [isResizing, setIsResizing] = useState<boolean>(false)
-  const { yjsDocMap } = useCollaborationContext()
   const [editor] = useLexicalComposerContext()
-  const isCollab = yjsDocMap.get('main') !== undefined
   const [selection, setSelection] = useState<
     RangeSelection | NodeSelection | GridSelection | null
   >(null)

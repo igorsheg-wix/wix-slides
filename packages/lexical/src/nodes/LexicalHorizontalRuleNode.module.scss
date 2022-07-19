@@ -3,9 +3,7 @@
   flex-direction: row;
   align-items: center;
   color: grey;
-  &.selected {
-    color: rgba(59, 130, 246, 1);
-  }
+
   span {
     font-size: 12px;
     color: inherit;
@@ -13,6 +11,10 @@
     width: min-content;
     display: block ruby;
   }
+}
+
+.hrWrap-selected {
+  color: rgba(59, 130, 246, 1);
 }
 
 .hr {
@@ -28,7 +30,9 @@
   height: 10px;
   border-radius: 1px;
   opacity: 1;
-  &.selected {
-    background-color: rgba(59, 130, 246, 1);
-  }
+}
+
+.selected {
+  // color: rgba(59, 130, 246, 1);
+  background-color: rgba(59, 130, 246, 1);
 }

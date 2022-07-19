@@ -1,8 +1,7 @@
-import React from "react";
-import { usePlateSelectors } from "@udecode/plate";
 import type { Slide } from "@wix-slides/common/types";
 import { templateEngine } from "@wix-slides/common/utils/template-engine";
 import { templates } from "@wix-slides/templates";
+import React from "react";
 import scrollIntoView from "smooth-scroll-into-view-if-needed";
 import useDecksterStore from "../../stores";
 import styles from "./Slide.module.scss";
@@ -14,7 +13,6 @@ interface SlideProps {
 }
 
 const WixSlide = React.memo(({ slide, index }: SlideProps) => {
-  const editor = usePlateSelectors().editor();
   const cursorOnSlide = useDecksterStore((s) => s.cursorOnSlide);
   const { tokens } = slide;
   const activeSlide = index === cursorOnSlide;
@@ -47,13 +45,7 @@ const WixSlide = React.memo(({ slide, index }: SlideProps) => {
       ref={ref as any}
     >
       <div className={styles.content}>
-        {editor && (
-          <Template
-            slideBackgroundImage={slideBackgroundImage}
-            editor={editor}
-            tokens={tokens}
-          />
-        )}
+        <Template slideBackgroundImage={slideBackgroundImage} tokens={tokens} />
       </div>
     </div>
   );

@@ -14,11 +14,13 @@
   "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
+    "@lexical/react": "^0.3.7",
     "@radix-ui/react-icons": "^1.1.1",
     "@udecode/plate": "^14.1.0",
     "classnames": "^2.3.1",
     "dompurify": "^2.3.8",
     "is-hotkey": "^0.2.0",
+    "lexical": "^0.3.7",
     "marked": "^4.0.17",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
