@@ -8,7 +8,6 @@
   "workspaces": [
     "packages/app/web",
     "packages/common",
-    "packages/editor",
     "packages/lexical",
     "packages/templates"
   ],

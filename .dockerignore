@@ -1,3 +1,6 @@
 node_modules
 wix-slides
 .env
+.yarn
+.idea
+.yarnrc.yml
