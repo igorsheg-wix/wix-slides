@@ -16,18 +16,13 @@
   "dependencies": {
     "@lexical/react": "^0.3.7",
     "@radix-ui/react-icons": "^1.1.1",
-    "@udecode/plate": "^14.1.0",
     "classnames": "^2.3.1",
     "dompurify": "^2.3.8",
     "is-hotkey": "^0.2.0",
     "lexical": "^0.3.7",
     "marked": "^4.0.17",
     "react": "^18.2.0",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
-    "react-dom": "^18.2.0",
-    "slate": "^0.81.1",
-    "slate-react": "^0.81.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.15",
